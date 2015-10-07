@@ -39,6 +39,8 @@
             this.lblName = new System.Windows.Forms.Label();
             this.btnAddGame = new System.Windows.Forms.Button();
             this.btnAddConsole = new System.Windows.Forms.Button();
+            this.lblColumn1 = new System.Windows.Forms.Label();
+            this.lblRow1 = new System.Windows.Forms.Label();
             this.mnuMain.SuspendLayout();
             this.pnlGameList.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +105,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlGameList.AutoScroll = true;
+            this.pnlGameList.Controls.Add(this.lblRow1);
+            this.pnlGameList.Controls.Add(this.lblColumn1);
             this.pnlGameList.Controls.Add(this.lblName);
             this.pnlGameList.Location = new System.Drawing.Point(12, 44);
             this.pnlGameList.Name = "pnlGameList";
@@ -111,11 +115,10 @@
             // 
             // lblName
             // 
-            this.lblName.AutoSize = true;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.Location = new System.Drawing.Point(12, 10);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(39, 13);
+            this.lblName.Size = new System.Drawing.Size(150, 13);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Name";
             // 
@@ -139,6 +142,22 @@
             this.btnAddConsole.Text = "Add Console";
             this.btnAddConsole.UseVisualStyleBackColor = true;
             // 
+            // lblColumn1
+            // 
+            this.lblColumn1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblColumn1.Location = new System.Drawing.Point(168, 0);
+            this.lblColumn1.Name = "lblColumn1";
+            this.lblColumn1.Size = new System.Drawing.Size(2, 477);
+            this.lblColumn1.TabIndex = 1;
+            // 
+            // lblRow1
+            // 
+            this.lblRow1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblRow1.Location = new System.Drawing.Point(3, 23);
+            this.lblRow1.Name = "lblRow1";
+            this.lblRow1.Size = new System.Drawing.Size(756, 2);
+            this.lblRow1.TabIndex = 2;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -155,7 +174,6 @@
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
             this.pnlGameList.ResumeLayout(false);
-            this.pnlGameList.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,6 +192,8 @@
         private System.Windows.Forms.Button btnAddGame;
         private System.Windows.Forms.Button btnAddConsole;
         private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label lblColumn1;
+        private System.Windows.Forms.Label lblRow1;
     }
 }
 

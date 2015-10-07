@@ -12,6 +12,9 @@ namespace VGCatalog
 {
     public partial class MainForm : Form
     {
+        // Database handler object
+        private DBHandler db = new DBHandler();
+
         public MainForm()
         {
             InitializeComponent();
@@ -29,7 +32,10 @@ namespace VGCatalog
         // On form load
         private void MainForm_Load(object sender, EventArgs e)
         {
-            for(int i=2; i <= 100; i++)
+            List<DBHandler.GameInfo> gameList = db.GetAllGames();
+
+            int i = 2;
+            foreach(var g in gameList)
             {
                 System.Windows.Forms.Label newLabel;
                 newLabel = new System.Windows.Forms.Label();
@@ -37,11 +43,12 @@ namespace VGCatalog
                 newLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 newLabel.Location = new System.Drawing.Point(12, 20 * i);
                 newLabel.Name = "test";
-                newLabel.Size = new System.Drawing.Size(50, 13);
+                newLabel.Size = new System.Drawing.Size(150, 13);
                 newLabel.TabIndex = 0;
-                newLabel.Text = "Test" + i;
+                newLabel.Text = g.name;
                 newLabel.AutoEllipsis = true;
                 this.pnlGameList.Controls.Add(newLabel);
+                i++;
             }
         }
     }
