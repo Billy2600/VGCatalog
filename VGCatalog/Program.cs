@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* 
+    VGCatalog by William McPherson
+    This program is licensed under the GPLv2, please see the included LICENSE textfile
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
