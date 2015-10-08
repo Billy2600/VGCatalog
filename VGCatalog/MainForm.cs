@@ -38,52 +38,15 @@ namespace VGCatalog
         // Build game list for main data grid
         private void BuildGameList(List<DBHandler.GameInfo> gameList)
         {
-            int i = 0;
+            // Put console names into datagridview combobox
+            (this.gridMain.Columns[3] as DataGridViewComboBoxColumn).DataSource = db.GetConsoleNames();
 
+            // Populate DataGridView
+            // This is not the standard way to do it, but I'm rolling my own for future possibility of non MSSQL DBs
             foreach (var g in gameList)
             {
-                // Create labels for this game
-                //for(int j = 1; j < 7; j++) // Skip gid
-                //{
-                //    System.Windows.Forms.Label newLabel = new System.Windows.Forms.Label();
-                //    newLabel.AutoSize = false;
-                //    newLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                //    newLabel.Name = "lblName" + i + "," + j;
-                //    newLabel.Size = new System.Drawing.Size(150, 13);
-                //    newLabel.TabIndex = 0;
-                //    // Choose name and location based on which field this is
-                //    // The x location can vary wildly since columns aren't all the same size
-                //    int xLoc = 0;
-                //    switch (j)
-                //    {
-                //        case 1:
-                //            newLabel.Text = g.name;
-                //            xLoc = 20;
-                //            break;
-                //        case 2:
-                //            newLabel.Text = g.publisher;
-                //            xLoc = 176;
-                //            break;
-                //        default:
-                //            newLabel.Text = "ERROR";
-                //            xLoc = j * 150;
-                //            break;
-                //    }
-                //    newLabel.Location = new System.Drawing.Point(xLoc, 28 + (18 * i));
-                //    newLabel.AutoEllipsis = true;
-                //    this.pnlGameList.Controls.Add(newLabel);
-                //}
-                
-                //// Create checkbox
-                //System.Windows.Forms.CheckBox newCBox = new System.Windows.Forms.CheckBox();
-                //newCBox.AutoSize = true;
-                //newCBox.Location = new System.Drawing.Point(3, 28 + (18 * i));
-                //newCBox.Name = "chkGame" + i;
-                //newCBox.Size = new System.Drawing.Size(15, 14);
-                //newCBox.TabIndex = 3;
-                //newCBox.UseVisualStyleBackColor = true;
-                //this.pnlGameList.Controls.Add(newCBox);
-                //i++;
+                // Turn boxed into string
+                this.gridMain.Rows.Add(g.name, g.publisher, g.genre, g.consoleName, g.boxed, g.containerId);
             }
         }
 

@@ -25,8 +25,20 @@ namespace VGCatalog
             public string publisher;
             public string genre;
             public int consoleId;
+            public string consoleName;
             public bool boxed;
             public int containerId;
+        }
+
+        // Console info struct
+        public struct ConsoleInfo
+        {
+            public int cid;
+            public string name;
+            public string manufacturer;
+            public int containerId;
+            public int switchBoxId;
+            public int switchBoxNo;
         }
 
         // TEMPORARY
@@ -45,7 +57,7 @@ namespace VGCatalog
 
             // Get all game info and store into list
             using (SqlConnection connection = new SqlConnection(connectString))
-            using (SqlCommand cmd = new SqlCommand("SELECT gid, name, publisher, genre, console_id, boxed, container_id FROM dbo.Games ORDER BY name asc", connection))
+            using (SqlCommand cmd = new SqlCommand("SELECT Games.gid, Games.name, publisher, genre, console_id, boxed, Games.container_id, Consoles.name as CName FROM Games, Consoles WHERE Consoles.cid = Games.console_id ORDER BY Games.name asc", connection))
             {
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -69,6 +81,8 @@ namespace VGCatalog
 
                             g.consoleId = reader.GetInt32(reader.GetOrdinal("console_id"));
 
+                            g.consoleName = reader.GetString(reader.GetOrdinal("CName"));
+
                             g.boxed = reader.GetBoolean(reader.GetOrdinal("boxed"));
 
                             int containerIndex = reader.GetOrdinal("container_id");
@@ -83,6 +97,31 @@ namespace VGCatalog
 
             // Return list
             return gameList;
+        }
+
+        // Get console names
+        public List<string> GetConsoleNames()
+        {
+            List<string> consoleNames = new List<string>();
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT name FROM Consoles ORDER BY name asc", connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Check if the reader has any rows at all before starting to read
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            consoleNames.Add(reader.GetString(reader.GetOrdinal("name")));
+                        }
+                    }
+                }
+                // Disconnect
+                connection.Close();
+            }
+            return consoleNames;
         }
     }
 }

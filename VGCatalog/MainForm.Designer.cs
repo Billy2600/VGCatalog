@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,13 +41,12 @@
             this.btnAddGame = new System.Windows.Forms.Button();
             this.btnRmoveConsole = new System.Windows.Forms.Button();
             this.gridMain = new System.Windows.Forms.DataGridView();
-            this.colCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPublisher = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGenre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoxed = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colContainerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConsole = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colBoxed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
@@ -149,65 +149,58 @@
             // 
             // gridMain
             // 
-            this.gridMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.gridMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colCheck,
             this.colName,
             this.colPublisher,
             this.colGenre,
             this.colConsole,
             this.colBoxed,
-            this.colContainerId});
+            this.colContainer});
             this.gridMain.Location = new System.Drawing.Point(12, 56);
             this.gridMain.Name = "gridMain";
-            this.gridMain.Size = new System.Drawing.Size(760, 480);
+            this.gridMain.Size = new System.Drawing.Size(760, 493);
             this.gridMain.TabIndex = 6;
-            // 
-            // colCheck
-            // 
-            this.colCheck.HeaderText = "";
-            this.colCheck.MinimumWidth = 30;
-            this.colCheck.Name = "colCheck";
-            this.colCheck.Width = 30;
             // 
             // colName
             // 
             this.colName.HeaderText = "Name";
             this.colName.Name = "colName";
-            this.colName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colName.Width = 150;
             // 
             // colPublisher
             // 
             this.colPublisher.HeaderText = "Publisher";
             this.colPublisher.Name = "colPublisher";
-            this.colPublisher.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colPublisher.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colPublisher.Width = 150;
             // 
             // colGenre
             // 
             this.colGenre.HeaderText = "Genre";
             this.colGenre.Name = "colGenre";
-            this.colGenre.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colGenre.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colGenre.Width = 150;
             // 
             // colConsole
             // 
             this.colConsole.HeaderText = "Console";
             this.colConsole.Name = "colConsole";
+            this.colConsole.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colConsole.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colConsole.Width = 130;
             // 
             // colBoxed
             // 
             this.colBoxed.HeaderText = "In Box";
             this.colBoxed.Name = "colBoxed";
+            this.colBoxed.Width = 45;
             // 
-            // colContainerId
+            // colContainer
             // 
-            this.colContainerId.HeaderText = "Container ID";
-            this.colContainerId.Name = "colContainerId";
+            this.colContainer.HeaderText = "Container #";
+            this.colContainer.Name = "colContainer";
+            this.colContainer.Width = 80;
             // 
             // MainForm
             // 
@@ -246,13 +239,12 @@
         private System.Windows.Forms.Button btnRemoveGame;
         private System.Windows.Forms.Button btnRmoveConsole;
         private System.Windows.Forms.DataGridView gridMain;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPublisher;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGenre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colConsole;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxed;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colContainerId;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colConsole;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colBoxed;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colContainer;
     }
 }
 
