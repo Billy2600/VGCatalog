@@ -35,14 +35,20 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnlGameList = new System.Windows.Forms.Panel();
-            this.lblName = new System.Windows.Forms.Label();
-            this.btnAddGame = new System.Windows.Forms.Button();
+            this.btnRemoveGame = new System.Windows.Forms.Button();
             this.btnAddConsole = new System.Windows.Forms.Button();
-            this.lblColumn1 = new System.Windows.Forms.Label();
-            this.lblRow1 = new System.Windows.Forms.Label();
+            this.btnAddGame = new System.Windows.Forms.Button();
+            this.btnRmoveConsole = new System.Windows.Forms.Button();
+            this.gridMain = new System.Windows.Forms.DataGridView();
+            this.colCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPublisher = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGenre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConsole = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBoxed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colContainerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
-            this.pnlGameList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -68,6 +74,7 @@
             // 
             // addGameToolStripMenuItem
             // 
+            this.addGameToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.book__plus;
             this.addGameToolStripMenuItem.Name = "addGameToolStripMenuItem";
             this.addGameToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.addGameToolStripMenuItem.Text = "Add Game";
@@ -99,73 +106,119 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // pnlGameList
+            // btnRemoveGame
             // 
-            this.pnlGameList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlGameList.AutoScroll = true;
-            this.pnlGameList.Controls.Add(this.lblRow1);
-            this.pnlGameList.Controls.Add(this.lblColumn1);
-            this.pnlGameList.Controls.Add(this.lblName);
-            this.pnlGameList.Location = new System.Drawing.Point(12, 44);
-            this.pnlGameList.Name = "pnlGameList";
-            this.pnlGameList.Size = new System.Drawing.Size(760, 477);
-            this.pnlGameList.TabIndex = 1;
-            // 
-            // lblName
-            // 
-            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(12, 10);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(150, 13);
-            this.lblName.TabIndex = 0;
-            this.lblName.Text = "Name";
-            // 
-            // btnAddGame
-            // 
-            this.btnAddGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddGame.Location = new System.Drawing.Point(12, 527);
-            this.btnAddGame.Name = "btnAddGame";
-            this.btnAddGame.Size = new System.Drawing.Size(75, 23);
-            this.btnAddGame.TabIndex = 2;
-            this.btnAddGame.Text = "Add Game";
-            this.btnAddGame.UseVisualStyleBackColor = true;
+            this.btnRemoveGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRemoveGame.Image = global::VGCatalog.Properties.Resources.book__minus;
+            this.btnRemoveGame.Location = new System.Drawing.Point(86, 27);
+            this.btnRemoveGame.Name = "btnRemoveGame";
+            this.btnRemoveGame.Size = new System.Drawing.Size(32, 23);
+            this.btnRemoveGame.TabIndex = 4;
+            this.btnRemoveGame.UseVisualStyleBackColor = true;
+            this.btnRemoveGame.Click += new System.EventHandler(this.btnRemoveGame_Click);
             // 
             // btnAddConsole
             // 
             this.btnAddConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddConsole.Location = new System.Drawing.Point(93, 527);
+            this.btnAddConsole.Image = global::VGCatalog.Properties.Resources.book__plus;
+            this.btnAddConsole.Location = new System.Drawing.Point(48, 27);
             this.btnAddConsole.Name = "btnAddConsole";
-            this.btnAddConsole.Size = new System.Drawing.Size(75, 23);
+            this.btnAddConsole.Size = new System.Drawing.Size(32, 23);
             this.btnAddConsole.TabIndex = 3;
-            this.btnAddConsole.Text = "Add Console";
             this.btnAddConsole.UseVisualStyleBackColor = true;
             // 
-            // lblColumn1
+            // btnAddGame
             // 
-            this.lblColumn1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblColumn1.Location = new System.Drawing.Point(168, 0);
-            this.lblColumn1.Name = "lblColumn1";
-            this.lblColumn1.Size = new System.Drawing.Size(2, 477);
-            this.lblColumn1.TabIndex = 1;
+            this.btnAddGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddGame.Image = global::VGCatalog.Properties.Resources.book__plus;
+            this.btnAddGame.Location = new System.Drawing.Point(12, 27);
+            this.btnAddGame.Name = "btnAddGame";
+            this.btnAddGame.Size = new System.Drawing.Size(30, 23);
+            this.btnAddGame.TabIndex = 2;
+            this.btnAddGame.UseVisualStyleBackColor = true;
             // 
-            // lblRow1
+            // btnRmoveConsole
             // 
-            this.lblRow1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblRow1.Location = new System.Drawing.Point(3, 23);
-            this.lblRow1.Name = "lblRow1";
-            this.lblRow1.Size = new System.Drawing.Size(756, 2);
-            this.lblRow1.TabIndex = 2;
+            this.btnRmoveConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnRmoveConsole.Image = global::VGCatalog.Properties.Resources.book__minus;
+            this.btnRmoveConsole.Location = new System.Drawing.Point(124, 27);
+            this.btnRmoveConsole.Name = "btnRmoveConsole";
+            this.btnRmoveConsole.Size = new System.Drawing.Size(32, 23);
+            this.btnRmoveConsole.TabIndex = 5;
+            this.btnRmoveConsole.UseVisualStyleBackColor = true;
+            // 
+            // gridMain
+            // 
+            this.gridMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colCheck,
+            this.colName,
+            this.colPublisher,
+            this.colGenre,
+            this.colConsole,
+            this.colBoxed,
+            this.colContainerId});
+            this.gridMain.Location = new System.Drawing.Point(12, 56);
+            this.gridMain.Name = "gridMain";
+            this.gridMain.Size = new System.Drawing.Size(760, 480);
+            this.gridMain.TabIndex = 6;
+            // 
+            // colCheck
+            // 
+            this.colCheck.HeaderText = "";
+            this.colCheck.MinimumWidth = 30;
+            this.colCheck.Name = "colCheck";
+            this.colCheck.Width = 30;
+            // 
+            // colName
+            // 
+            this.colName.HeaderText = "Name";
+            this.colName.Name = "colName";
+            this.colName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colPublisher
+            // 
+            this.colPublisher.HeaderText = "Publisher";
+            this.colPublisher.Name = "colPublisher";
+            this.colPublisher.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPublisher.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colGenre
+            // 
+            this.colGenre.HeaderText = "Genre";
+            this.colGenre.Name = "colGenre";
+            this.colGenre.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colGenre.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colConsole
+            // 
+            this.colConsole.HeaderText = "Console";
+            this.colConsole.Name = "colConsole";
+            // 
+            // colBoxed
+            // 
+            this.colBoxed.HeaderText = "In Box";
+            this.colBoxed.Name = "colBoxed";
+            // 
+            // colContainerId
+            // 
+            this.colContainerId.HeaderText = "Container ID";
+            this.colContainerId.Name = "colContainerId";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.gridMain);
+            this.Controls.Add(this.btnRmoveConsole);
+            this.Controls.Add(this.btnRemoveGame);
             this.Controls.Add(this.btnAddConsole);
             this.Controls.Add(this.btnAddGame);
-            this.Controls.Add(this.pnlGameList);
             this.Controls.Add(this.mnuMain);
             this.MainMenuStrip = this.mnuMain;
             this.Name = "MainForm";
@@ -173,7 +226,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
-            this.pnlGameList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,16 +237,22 @@
         private System.Windows.Forms.MenuStrip mnuMain;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.Panel pnlGameList;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addGameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addConsoleToolStripMenuItem;
         private System.Windows.Forms.Button btnAddGame;
         private System.Windows.Forms.Button btnAddConsole;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Label lblColumn1;
-        private System.Windows.Forms.Label lblRow1;
+        private System.Windows.Forms.Button btnRemoveGame;
+        private System.Windows.Forms.Button btnRmoveConsole;
+        private System.Windows.Forms.DataGridView gridMain;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colCheck;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPublisher;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGenre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colConsole;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBoxed;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colContainerId;
     }
 }
 
