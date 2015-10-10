@@ -41,8 +41,12 @@ namespace VGCatalog
             public int switchBoxNo;
         }
 
-        // TEMPORARY
+        // Connection string
         private const string connectString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=VGCatalog;Integrated Security=SSPI";
+
+        // Logged in flag
+        private bool loggedIn = false;
+        public bool LoggedIn { get { return loggedIn; } } // Accessible but not modifiable
 
         public DBHandler()
         {
@@ -81,6 +85,7 @@ namespace VGCatalog
 
                             g.consoleId = reader.GetInt32(reader.GetOrdinal("console_id"));
 
+                            // Must get console name to match the combo box
                             g.consoleName = reader.GetString(reader.GetOrdinal("CName"));
 
                             g.boxed = reader.GetBoolean(reader.GetOrdinal("boxed"));
@@ -100,6 +105,7 @@ namespace VGCatalog
         }
 
         // Get console names
+        // Useful for populating combo box
         public List<string> GetConsoleNames()
         {
             List<string> consoleNames = new List<string>();
@@ -122,6 +128,55 @@ namespace VGCatalog
                 connection.Close();
             }
             return consoleNames;
+        }
+
+        // Get Console ID from name
+        public int GetConsoleID(string name)
+        {
+            int consoleID = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT cid FROM Consoles WHERE name = @Name", connection))
+            {
+                cmd.Parameters.AddWithValue("@Name", name);
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Check if the reader has any rows at all before starting to read
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            consoleID = reader.GetInt32(reader.GetOrdinal("cid"));
+                        }
+                    }
+                }
+                // Disconnect
+                connection.Close();
+            }
+            return consoleID;
+        }
+
+        // Insert new game into database
+        public void InsertGame(GameInfo newGame)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO Games (name,publisher,genre,console_id,boxed,container_id) VALUES(@Name,@Publisher,@Genre,@ConsoleId,@Boxed,@ContainerId)", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Name", newGame.name);
+                cmd.Parameters.AddWithValue("@Publisher", newGame.publisher);
+                cmd.Parameters.AddWithValue("@Genre", newGame.genre);
+                cmd.Parameters.AddWithValue("@ConsoleId", newGame.consoleId);
+                cmd.Parameters.AddWithValue("@Boxed", newGame.boxed);
+                cmd.Parameters.AddWithValue("@ContainerId", newGame.containerId);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
         }
     }
 }

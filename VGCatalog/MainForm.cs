@@ -46,8 +46,9 @@ namespace VGCatalog
             foreach (var g in gameList)
             {
                 // Turn boxed into string
-                this.gridMain.Rows.Add(g.name, g.publisher, g.genre, g.consoleName, g.boxed, g.containerId);
+                this.gridMain.Rows.Add(g.name, g.publisher, g.genre, g.consoleName, g.boxed, g.containerId,g.gid);
             }
+            //this.gridMain.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
 
         // Delete selected game(s)
@@ -59,6 +60,76 @@ namespace VGCatalog
             {
                 
             }
+        }
+
+        // Save changes in grid view back to database
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in gridMain.Rows)
+            {
+                // Skip this row if it's entirely empty
+                bool rowIsEmpty = true;
+                foreach(DataGridViewCell cell in row.Cells)
+                {
+                    if(cell.Value != null)
+                    {
+                        rowIsEmpty = false;
+                        break;
+                    }
+                }
+                if (rowIsEmpty) continue;
+
+                // Insert row into database if new row
+                // GID will not be set if row was added by user
+                if(row.Cells["colGID"].Value == null)
+                {
+                    // Get data from cells, while checking for valid input
+                    DBHandler.GameInfo newGame = new DBHandler.GameInfo();
+                    if (row.Cells["colConsole"].Value != null)
+                        newGame.name = row.Cells["colName"].Value.ToString();
+                    else
+                        newGame.name = "[UNTITLED]";
+
+                    if(row.Cells["colPublisher"].Value != null)
+                        newGame.publisher = row.Cells["colPublisher"].Value.ToString();
+                    else
+                        newGame.publisher = "";
+
+                    if (row.Cells["colGenre"].Value != null)
+                        newGame.genre = row.Cells["colGenre"].Value.ToString();
+                    else
+                        newGame.genre = "";
+
+                    if (row.Cells["colConsole"].Value != null)
+                        newGame.consoleId = db.GetConsoleID(row.Cells["colConsole"].Value.ToString());
+                    else
+                        newGame.consoleId = 1;
+                        
+                    newGame.boxed = row.Cells["colBoxed"].Value.ToString() == "1"; // Will automatically return 0 on error
+
+                    if (row.Cells["colContainer"].Value != null)
+                        newGame.containerId = Convert.ToInt32(row.Cells["colContainer"].Value);
+                    else
+                        newGame.containerId = 0;
+
+                    // Insert it
+                    db.InsertGame(newGame);
+                    //MessageBox.Show(newGame.name + newGame.publisher + newGame.genre + newGame.consoleId + newGame.boxed + newGame.containerId);
+                }
+            }
+
+            // Reload game list
+            gridMain.Rows.Clear();
+            gridMain.Refresh();
+            BuildGameList(db.GetAllGames());
+        }
+
+        // Refresh game list
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            gridMain.Rows.Clear();
+            gridMain.Refresh();
+            BuildGameList(db.GetAllGames());
         }
     }
 }

@@ -63,6 +63,16 @@ namespace VGCatalog.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap arrow_circle_double_135 {
+            get {
+                object obj = ResourceManager.GetObject("arrow-circle-double-135", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap book__minus {
             get {
                 object obj = ResourceManager.GetObject("book--minus", resourceCulture);
@@ -76,6 +86,16 @@ namespace VGCatalog.Properties {
         internal static System.Drawing.Bitmap book__plus {
             get {
                 object obj = ResourceManager.GetObject("book--plus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap disk {
+            get {
+                object obj = ResourceManager.GetObject("disk", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
