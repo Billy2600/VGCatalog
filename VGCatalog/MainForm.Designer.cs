@@ -31,11 +31,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridMain = new System.Windows.Forms.DataGridView();
+            this.btnRmoveConsole = new System.Windows.Forms.Button();
+            this.btnRemoveGame = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPublisher = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGenre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,11 +48,6 @@
             this.colBoxed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnRmoveConsole = new System.Windows.Forms.Button();
-            this.btnRemoveGame = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.addGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +60,7 @@
             this.helpToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(784, 24);
+            this.mnuMain.Size = new System.Drawing.Size(774, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "menuStrip1";
             // 
@@ -72,6 +72,13 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // addGameToolStripMenuItem
+            // 
+            this.addGameToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.book__plus;
+            this.addGameToolStripMenuItem.Name = "addGameToolStripMenuItem";
+            this.addGameToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.addGameToolStripMenuItem.Text = "Add Game";
             // 
             // addConsoleToolStripMenuItem
             // 
@@ -96,7 +103,8 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -116,10 +124,51 @@
             this.colBoxed,
             this.colContainer,
             this.colGID});
+            this.gridMain.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.gridMain.Location = new System.Drawing.Point(12, 56);
             this.gridMain.Name = "gridMain";
-            this.gridMain.Size = new System.Drawing.Size(760, 493);
+            this.gridMain.Size = new System.Drawing.Size(750, 493);
             this.gridMain.TabIndex = 6;
+            this.gridMain.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridMain_UserDeletingRow);
+            // 
+            // btnRmoveConsole
+            // 
+            this.btnRmoveConsole.Image = global::VGCatalog.Properties.Resources.book__minus;
+            this.btnRmoveConsole.Location = new System.Drawing.Point(124, 27);
+            this.btnRmoveConsole.Name = "btnRmoveConsole";
+            this.btnRmoveConsole.Size = new System.Drawing.Size(32, 23);
+            this.btnRmoveConsole.TabIndex = 5;
+            this.btnRmoveConsole.UseVisualStyleBackColor = true;
+            // 
+            // btnRemoveGame
+            // 
+            this.btnRemoveGame.Image = global::VGCatalog.Properties.Resources.book__minus;
+            this.btnRemoveGame.Location = new System.Drawing.Point(86, 27);
+            this.btnRemoveGame.Name = "btnRemoveGame";
+            this.btnRemoveGame.Size = new System.Drawing.Size(32, 23);
+            this.btnRemoveGame.TabIndex = 4;
+            this.btnRemoveGame.UseVisualStyleBackColor = true;
+            this.btnRemoveGame.Click += new System.EventHandler(this.btnRemoveGame_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
+            this.btnRefresh.Location = new System.Drawing.Point(48, 27);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(32, 23);
+            this.btnRefresh.TabIndex = 3;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = global::VGCatalog.Properties.Resources.disk;
+            this.btnSave.Location = new System.Drawing.Point(12, 27);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(30, 23);
+            this.btnSave.TabIndex = 2;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // colName
             // 
@@ -163,62 +212,13 @@
             // 
             this.colGID.HeaderText = "GID";
             this.colGID.Name = "colGID";
-            // 
-            // btnRmoveConsole
-            // 
-            this.btnRmoveConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRmoveConsole.Image = global::VGCatalog.Properties.Resources.book__minus;
-            this.btnRmoveConsole.Location = new System.Drawing.Point(124, 27);
-            this.btnRmoveConsole.Name = "btnRmoveConsole";
-            this.btnRmoveConsole.Size = new System.Drawing.Size(32, 23);
-            this.btnRmoveConsole.TabIndex = 5;
-            this.btnRmoveConsole.UseVisualStyleBackColor = true;
-            // 
-            // btnRemoveGame
-            // 
-            this.btnRemoveGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRemoveGame.Image = global::VGCatalog.Properties.Resources.book__minus;
-            this.btnRemoveGame.Location = new System.Drawing.Point(86, 27);
-            this.btnRemoveGame.Name = "btnRemoveGame";
-            this.btnRemoveGame.Size = new System.Drawing.Size(32, 23);
-            this.btnRemoveGame.TabIndex = 4;
-            this.btnRemoveGame.UseVisualStyleBackColor = true;
-            this.btnRemoveGame.Click += new System.EventHandler(this.btnRemoveGame_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnRefresh.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
-            this.btnRefresh.Location = new System.Drawing.Point(48, 27);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(32, 23);
-            this.btnRefresh.TabIndex = 3;
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSave.Image = global::VGCatalog.Properties.Resources.disk;
-            this.btnSave.Location = new System.Drawing.Point(12, 27);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(30, 23);
-            this.btnSave.TabIndex = 2;
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // addGameToolStripMenuItem
-            // 
-            this.addGameToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.book__plus;
-            this.addGameToolStripMenuItem.Name = "addGameToolStripMenuItem";
-            this.addGameToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.addGameToolStripMenuItem.Text = "Add Game";
+            this.colGID.Visible = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(774, 561);
             this.Controls.Add(this.gridMain);
             this.Controls.Add(this.btnRmoveConsole);
             this.Controls.Add(this.btnRemoveGame);

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace VGCatalog
@@ -104,6 +105,53 @@ namespace VGCatalog
             return gameList;
         }
 
+        // Insert new game into database
+        public void InsertGame(GameInfo newGame)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO Games (name,publisher,genre,console_id,boxed,container_id) VALUES(@Name,@Publisher,@Genre,@ConsoleId,@Boxed,@ContainerId)", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Name", newGame.name);
+                cmd.Parameters.AddWithValue("@Publisher", newGame.publisher);
+                cmd.Parameters.AddWithValue("@Genre", newGame.genre);
+                cmd.Parameters.AddWithValue("@ConsoleId", newGame.consoleId);
+                cmd.Parameters.AddWithValue("@Boxed", newGame.boxed);
+                cmd.Parameters.AddWithValue("@ContainerId", newGame.containerId);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
+        // Update game in database
+        // GameInfo.gid must match the one you wish to update
+        public void UpdateGame(GameInfo updateGame)
+        {
+
+        }
+
+        // Delete game from database
+        // User should have already been prompted
+        public void DeleteGame(int gid)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("DELETE FROM Games WHERE gid = @Gid", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Gid", gid);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
         // Get console names
         // Useful for populating combo box
         public List<string> GetConsoleNames()
@@ -155,28 +203,6 @@ namespace VGCatalog
                 connection.Close();
             }
             return consoleID;
-        }
-
-        // Insert new game into database
-        public void InsertGame(GameInfo newGame)
-        {
-            using (SqlConnection connection = new SqlConnection(connectString))
-            using (SqlCommand cmd = new SqlCommand("INSERT INTO Games (name,publisher,genre,console_id,boxed,container_id) VALUES(@Name,@Publisher,@Genre,@ConsoleId,@Boxed,@ContainerId)", connection))
-            {
-                // Add parameters
-                cmd.Parameters.AddWithValue("@Name", newGame.name);
-                cmd.Parameters.AddWithValue("@Publisher", newGame.publisher);
-                cmd.Parameters.AddWithValue("@Genre", newGame.genre);
-                cmd.Parameters.AddWithValue("@ConsoleId", newGame.consoleId);
-                cmd.Parameters.AddWithValue("@Boxed", newGame.boxed);
-                cmd.Parameters.AddWithValue("@ContainerId", newGame.containerId);
-                // Open connection and insert
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-                // Disconnect
-                connection.Close();
-            }
         }
     }
 }

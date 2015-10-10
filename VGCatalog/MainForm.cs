@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* 
+    VGCatalog by William McPherson
+    This program is licensed under the GPLv2, please see the included LICENSE textfile
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,8 +29,9 @@ namespace VGCatalog
         {
             const string help =
                 "VGCatalog by William McPherson 2015\n" +
-                "This program is licensed under the GNU General Public Liscense, please read the included LICENSE text file";
-            MessageBox.Show(this,help,"About");
+                "This program is licensed under the GNU General Public License v2, please read the included LICENSE text file\n" +
+                "Fugue Icons (C) 2013 Yusuke Kamiyamane. All rights reserved.";
+            MessageBox.Show(this,help,"About",MessageBoxButtons.OK,MessageBoxIcon.Question);
         }
 
         // On form load
@@ -104,8 +109,11 @@ namespace VGCatalog
                         newGame.consoleId = db.GetConsoleID(row.Cells["colConsole"].Value.ToString());
                     else
                         newGame.consoleId = 1;
-                        
-                    newGame.boxed = row.Cells["colBoxed"].Value.ToString() == "1"; // Will automatically return 0 on error
+
+                    if (row.Cells["colContainer"].Value != null)
+                        newGame.boxed = row.Cells["colBoxed"].Value.ToString() == "1";
+                    else
+                        newGame.boxed = false;
 
                     if (row.Cells["colContainer"].Value != null)
                         newGame.containerId = Convert.ToInt32(row.Cells["colContainer"].Value);
@@ -131,5 +139,28 @@ namespace VGCatalog
             gridMain.Refresh();
             BuildGameList(db.GetAllGames());
         }
+
+        // Delete row
+        private void gridMain_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            // Prompt user
+            string name = "[UNTITLED]";
+            if (e.Row.Cells["colName"].Value != null) name = e.Row.Cells["colName"].Value.ToString();
+
+            DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete "+ name +"?", "Are you sure?", MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                // Delete out of database if applicable
+                if(e.Row.Cells["colGID"].Value != null)
+                {
+                    db.DeleteGame(Convert.ToInt32(e.Row.Cells["colGID"].Value));
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
     }
 }
