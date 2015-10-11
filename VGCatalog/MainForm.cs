@@ -22,6 +22,14 @@ namespace VGCatalog
         // So we can add an asterisk when unsaved
         const string formTitle = "VGCatalog";
 
+        // Keep track of indexes of rows that have been changed
+        // Hash set used to avoid duplicates
+        private HashSet<int> mainChangedRows = new HashSet<int>();
+        private HashSet<int> consolesChangedRows = new HashSet<int>();
+        // Flag to ignore changes to datagridviews
+        // so we can add data programatically without storing changed rows
+        bool ignoreChange = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -40,8 +48,7 @@ namespace VGCatalog
         // On form load
         private void MainForm_Load(object sender, EventArgs e)
         {
-            BuildGameList(db.GetAllGames());
-            BuildConsoleList(db.GetAllConsoles());
+            RefreshLists();
         }
 
         // Build game list for main data grid
@@ -72,6 +79,7 @@ namespace VGCatalog
         // Refresh lists
         private void RefreshLists()
         {
+            ignoreChange = true;
             // Games
             gridMain.Rows.Clear();
             gridMain.Refresh();
@@ -80,6 +88,8 @@ namespace VGCatalog
             gridConsoles.Rows.Clear();
             gridConsoles.Refresh();
             BuildConsoleList(db.GetAllConsoles());
+
+            ignoreChange = false;
         }
 
         // Delete selected game(s)
@@ -155,7 +165,7 @@ namespace VGCatalog
 
                     // Insert row into database if new row
                     // GID will not be set if row was added by user
-                    if (row.Cells["colGID"].Value == null)
+                    if (row.Cells["colGID"].Value == null || mainChangedRows.Contains(row.Cells["colGID"].RowIndex))
                     {
                         // Get data from cells, while checking for valid input
                         DBHandler.GameInfo newGame = new DBHandler.GameInfo();
@@ -190,7 +200,18 @@ namespace VGCatalog
                             newGame.containerId = 0;
 
                         // Insert it
-                        db.InsertGame(newGame);
+                        if (row.Cells["colGID"].Value == null)
+                            db.InsertGame(newGame);
+                        // Update it
+                        else
+                        {
+                            // Make sure GID is valid
+                            if (row.Cells["colGID"].Value != null && Int32.TryParse(row.Cells["colGID"].Value.ToString(), out test))
+                            {
+                                newGame.gid = Convert.ToInt32(row.Cells["colGID"].Value);
+                                db.UpdateGame(newGame);
+                            }
+                        }
                     }
                 }
             }
@@ -203,7 +224,7 @@ namespace VGCatalog
                 {
                     if (CheckEmptyRow(row)) continue;
 
-                    if (row.Cells["colCID"].Value == null)
+                    if (row.Cells["colCID"].Value == null || consolesChangedRows.Contains(row.Cells["colGID"].RowIndex))
                     {
                         DBHandler.ConsoleInfo newConsole = new DBHandler.ConsoleInfo();
                         if (row.Cells["colConsoleName"].Value != null)
@@ -226,7 +247,17 @@ namespace VGCatalog
                             newConsole.switchBoxNo = Convert.ToInt32(row.Cells["colSwitchboxNo"].Value);
                         else
                             newConsole.switchBoxNo = 0;
-                        db.InsertConsole(newConsole);
+                        if (row.Cells["colCID"].Value == null)
+                            db.InsertConsole(newConsole);
+                        else
+                        {
+                            if (row.Cells["colCID"].Value != null && Int32.TryParse(row.Cells["colCID"].Value.ToString(), out test))
+                            {
+                                newConsole.cid = Convert.ToInt32(row.Cells["colCID"].Value);
+                                db.UpdateConsole(newConsole);
+                            } 
+                        }
+                            
                     }
                 }
             }
@@ -286,6 +317,19 @@ namespace VGCatalog
             {
                 e.Cancel = true;
             }
+        }
+
+        // Add row that has had cell changed
+        private void gridMain_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if(!ignoreChange && e.RowIndex != -1)
+                mainChangedRows.Add(e.RowIndex);
+        }
+
+        private void gridConsoles_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!ignoreChange && e.RowIndex != -1)
+                consolesChangedRows.Add(e.RowIndex);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using System.Data.SqlClient;
 
 namespace VGCatalog
@@ -40,6 +40,21 @@ namespace VGCatalog
             public int containerId;
             public int switchBoxId;
             public int switchBoxNo;
+        }
+
+        // Container info struct
+        public struct ContainerInfo
+        {
+            public int con_id;
+            public string name;
+        }
+
+        // Switchbox info struct
+        public struct SwitchboxInfo
+        {
+            public int sid;
+            public string name;
+            public int numSwitches;
         }
 
         // Connection string
@@ -131,7 +146,24 @@ namespace VGCatalog
         // GameInfo.gid must match the one you wish to update
         public void UpdateGame(GameInfo updateGame)
         {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("UPDATE Games SET name = @Name,publisher = @Publisher,genre = @Genre,console_id = @ConsoleId,boxed = @boxed,container_id = @ContainerId WHERE gid = @Gid", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Gid", updateGame.gid);
+                cmd.Parameters.AddWithValue("@Name", updateGame.name);
+                cmd.Parameters.AddWithValue("@Publisher", updateGame.publisher);
+                cmd.Parameters.AddWithValue("@Genre", updateGame.genre);
+                cmd.Parameters.AddWithValue("@ConsoleId", updateGame.consoleId);
+                cmd.Parameters.AddWithValue("@Boxed", updateGame.boxed);
+                cmd.Parameters.AddWithValue("@ContainerId", updateGame.containerId);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
 
+                // Disconnect
+                connection.Close();
+            }
         }
 
         // Delete game from database
@@ -283,6 +315,28 @@ namespace VGCatalog
             {
                 // Add parameters
                 cmd.Parameters.AddWithValue("@Cid", cid);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
+        // Update console in database
+        public void UpdateConsole(ConsoleInfo updateConsole)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("UPDATE Consoles SET name = @Name,manufacturer = @Manufacturer,container_id = @ContainerId,switchbox_id = @SwitchboxId,switchbox_no = @SwitchboxNo WHERE cid = @Cid", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Cid", updateConsole.cid);
+                cmd.Parameters.AddWithValue("@Name", updateConsole.name);
+                cmd.Parameters.AddWithValue("@Manufacturer", updateConsole.manufacturer);
+                cmd.Parameters.AddWithValue("@ContainerId", updateConsole.containerId);
+                cmd.Parameters.AddWithValue("@SwitchboxId", updateConsole.switchBoxId);
+                cmd.Parameters.AddWithValue("@SwitchboxNo", updateConsole.switchBoxNo);
                 // Open connection and insert
                 connection.Open();
                 cmd.ExecuteNonQuery();

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
@@ -58,6 +59,9 @@
             this.colSwitchbox = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSwitchboxNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tpContainers = new System.Windows.Forms.TabPage();
+            this.tpSwitchboxes = new System.Windows.Forms.TabPage();
+            this.ttipMain = new System.Windows.Forms.ToolTip(this.components);
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.tabMain.SuspendLayout();
@@ -145,6 +149,7 @@
             this.gridMain.Name = "gridMain";
             this.gridMain.Size = new System.Drawing.Size(778, 444);
             this.gridMain.TabIndex = 6;
+            this.gridMain.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellValueChanged);
             this.gridMain.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridMain_UserDeletingRow);
             // 
             // colName
@@ -194,30 +199,33 @@
             // btnDelRow
             // 
             this.btnDelRow.Image = global::VGCatalog.Properties.Resources.cross;
-            this.btnDelRow.Location = new System.Drawing.Point(86, 27);
+            this.btnDelRow.Location = new System.Drawing.Point(78, 27);
             this.btnDelRow.Name = "btnDelRow";
             this.btnDelRow.Size = new System.Drawing.Size(32, 23);
             this.btnDelRow.TabIndex = 4;
+            this.ttipMain.SetToolTip(this.btnDelRow, "Delete");
             this.btnDelRow.UseVisualStyleBackColor = true;
             this.btnDelRow.Click += new System.EventHandler(this.btnRemoveGame_Click);
             // 
             // btnRefresh
             // 
             this.btnRefresh.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
-            this.btnRefresh.Location = new System.Drawing.Point(48, 27);
+            this.btnRefresh.Location = new System.Drawing.Point(40, 27);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(32, 23);
             this.btnRefresh.TabIndex = 3;
+            this.ttipMain.SetToolTip(this.btnRefresh, "Refresh");
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // btnSave
             // 
             this.btnSave.Image = global::VGCatalog.Properties.Resources.disk;
-            this.btnSave.Location = new System.Drawing.Point(12, 27);
+            this.btnSave.Location = new System.Drawing.Point(4, 27);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(30, 23);
             this.btnSave.TabIndex = 2;
+            this.ttipMain.SetToolTip(this.btnSave, "Save");
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -228,6 +236,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMain.Controls.Add(this.tpGames);
             this.tabMain.Controls.Add(this.tpConsoles);
+            this.tabMain.Controls.Add(this.tpContainers);
+            this.tabMain.Controls.Add(this.tpSwitchboxes);
             this.tabMain.Location = new System.Drawing.Point(0, 56);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
@@ -272,10 +282,11 @@
             this.colSwitchboxNo,
             this.colCID});
             this.gridConsoles.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
-            this.gridConsoles.Location = new System.Drawing.Point(3, 6);
+            this.gridConsoles.Location = new System.Drawing.Point(6, 6);
             this.gridConsoles.Name = "gridConsoles";
             this.gridConsoles.Size = new System.Drawing.Size(778, 444);
             this.gridConsoles.TabIndex = 7;
+            this.gridConsoles.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridConsoles_CellValueChanged);
             this.gridConsoles.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridConsoles_UserDeletingRow);
             // 
             // colConsoleName
@@ -311,6 +322,24 @@
             this.colCID.HeaderText = "CID";
             this.colCID.Name = "colCID";
             this.colCID.Visible = false;
+            // 
+            // tpContainers
+            // 
+            this.tpContainers.Location = new System.Drawing.Point(4, 22);
+            this.tpContainers.Name = "tpContainers";
+            this.tpContainers.Size = new System.Drawing.Size(787, 587);
+            this.tpContainers.TabIndex = 2;
+            this.tpContainers.Text = "Containers";
+            this.tpContainers.UseVisualStyleBackColor = true;
+            // 
+            // tpSwitchboxes
+            // 
+            this.tpSwitchboxes.Location = new System.Drawing.Point(4, 22);
+            this.tpSwitchboxes.Name = "tpSwitchboxes";
+            this.tpSwitchboxes.Size = new System.Drawing.Size(787, 587);
+            this.tpSwitchboxes.TabIndex = 3;
+            this.tpSwitchboxes.Text = "Switchboxes";
+            this.tpSwitchboxes.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -368,6 +397,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchbox;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchboxNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCID;
+        private System.Windows.Forms.ToolTip ttipMain;
+        private System.Windows.Forms.TabPage tpContainers;
+        private System.Windows.Forms.TabPage tpSwitchboxes;
     }
 }
 
