@@ -152,6 +152,55 @@ namespace VGCatalog
             }
         }
 
+        // Get the data for all consoles
+        public List<ConsoleInfo> GetAllConsoles()
+        {
+            // Initialize list
+            List<ConsoleInfo> consoleList = new List<ConsoleInfo>();
+
+            // Get all game info and store into list
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT cid, name, manufacturer, container_id, switchbox_id, switchbox_no FROM Consoles ORDER BY name asc", connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Check if the reader has any rows at all before starting to read
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            ConsoleInfo c = new ConsoleInfo();
+                            c.cid = reader.GetInt32(reader.GetOrdinal("cid"));
+
+                            c.name = reader.GetString(reader.GetOrdinal("name"));
+
+                            // Make sure to check for nulls
+                            int manIndex = reader.GetOrdinal("manufacturer");
+                            if (!reader.IsDBNull(manIndex)) c.manufacturer = reader.GetString(manIndex);
+
+                            int containerIndex = reader.GetOrdinal("container_id");
+                            if (!reader.IsDBNull(containerIndex)) c.containerId = reader.GetInt32(containerIndex);
+
+                            // Switchbox stuff
+                            int sbIDindex = reader.GetOrdinal("switchbox_id");
+                            if (!reader.IsDBNull(sbIDindex)) c.switchBoxId = reader.GetInt32(sbIDindex);
+
+                            int sbNoIndex = reader.GetOrdinal("switchbox_no");
+                            if (!reader.IsDBNull(sbNoIndex)) c.switchBoxNo = reader.GetInt32(sbNoIndex);
+
+                            consoleList.Add(c);
+                        }
+                    }
+                }
+                // Disconnect
+                connection.Close();
+            }
+
+            // Return list
+            return consoleList;
+        }
+
         // Get console names
         // Useful for populating combo box
         public List<string> GetConsoleNames()
@@ -203,6 +252,44 @@ namespace VGCatalog
                 connection.Close();
             }
             return consoleID;
+        }
+
+        // Insert new console into database
+        public void InsertConsole(ConsoleInfo newConsole)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO Consoles (name,manufacturer,container_id,switchbox_id,switchbox_no) VALUES(@Name,@Manufacturer,@ContainerId,@SwitchboxId,@SwitchboxNo)", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Name", newConsole.name);
+                cmd.Parameters.AddWithValue("@Manufacturer", newConsole.manufacturer);
+                cmd.Parameters.AddWithValue("@ContainerId", newConsole.containerId);
+                cmd.Parameters.AddWithValue("@SwitchboxId", newConsole.switchBoxId);
+                cmd.Parameters.AddWithValue("@SwitchboxNo", newConsole.switchBoxNo);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
+        // Delete console from database
+        public void DeleteConsole(int cid)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("DELETE FROM Consoles WHERE cid = @Cid", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Cid", cid);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
         }
     }
 }

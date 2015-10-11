@@ -29,18 +29,15 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
             this.addConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridMain = new System.Windows.Forms.DataGridView();
-            this.btnRmoveConsole = new System.Windows.Forms.Button();
-            this.btnRemoveGame = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPublisher = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGenre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,8 +45,25 @@
             this.colBoxed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDelRow = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.tabMain = new System.Windows.Forms.TabControl();
+            this.tpGames = new System.Windows.Forms.TabPage();
+            this.tpConsoles = new System.Windows.Forms.TabPage();
+            this.gridConsoles = new System.Windows.Forms.DataGridView();
+            this.colConsoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colManufacturer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConsoleContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSwitchbox = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSwitchboxNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
+            this.tabMain.SuspendLayout();
+            this.tpGames.SuspendLayout();
+            this.tpConsoles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridConsoles)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -60,25 +74,27 @@
             this.helpToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(774, 24);
+            this.mnuMain.Size = new System.Drawing.Size(795, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addGameToolStripMenuItem,
+            this.tsmSave,
             this.addConsoleToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // addGameToolStripMenuItem
+            // tsmSave
             // 
-            this.addGameToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.book__plus;
-            this.addGameToolStripMenuItem.Name = "addGameToolStripMenuItem";
-            this.addGameToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.addGameToolStripMenuItem.Text = "Add Game";
+            this.tsmSave.Image = global::VGCatalog.Properties.Resources.disk;
+            this.tsmSave.Name = "tsmSave";
+            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmSave.Size = new System.Drawing.Size(142, 22);
+            this.tsmSave.Text = "Save";
+            this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
             // 
             // addConsoleToolStripMenuItem
             // 
@@ -125,50 +141,11 @@
             this.colContainer,
             this.colGID});
             this.gridMain.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
-            this.gridMain.Location = new System.Drawing.Point(12, 56);
+            this.gridMain.Location = new System.Drawing.Point(6, 6);
             this.gridMain.Name = "gridMain";
-            this.gridMain.Size = new System.Drawing.Size(750, 493);
+            this.gridMain.Size = new System.Drawing.Size(778, 444);
             this.gridMain.TabIndex = 6;
             this.gridMain.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridMain_UserDeletingRow);
-            // 
-            // btnRmoveConsole
-            // 
-            this.btnRmoveConsole.Image = global::VGCatalog.Properties.Resources.book__minus;
-            this.btnRmoveConsole.Location = new System.Drawing.Point(124, 27);
-            this.btnRmoveConsole.Name = "btnRmoveConsole";
-            this.btnRmoveConsole.Size = new System.Drawing.Size(32, 23);
-            this.btnRmoveConsole.TabIndex = 5;
-            this.btnRmoveConsole.UseVisualStyleBackColor = true;
-            // 
-            // btnRemoveGame
-            // 
-            this.btnRemoveGame.Image = global::VGCatalog.Properties.Resources.book__minus;
-            this.btnRemoveGame.Location = new System.Drawing.Point(86, 27);
-            this.btnRemoveGame.Name = "btnRemoveGame";
-            this.btnRemoveGame.Size = new System.Drawing.Size(32, 23);
-            this.btnRemoveGame.TabIndex = 4;
-            this.btnRemoveGame.UseVisualStyleBackColor = true;
-            this.btnRemoveGame.Click += new System.EventHandler(this.btnRemoveGame_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
-            this.btnRefresh.Location = new System.Drawing.Point(48, 27);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(32, 23);
-            this.btnRefresh.TabIndex = 3;
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Image = global::VGCatalog.Properties.Resources.disk;
-            this.btnSave.Location = new System.Drawing.Point(12, 27);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(30, 23);
-            this.btnSave.TabIndex = 2;
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // colName
             // 
@@ -214,14 +191,134 @@
             this.colGID.Name = "colGID";
             this.colGID.Visible = false;
             // 
+            // btnDelRow
+            // 
+            this.btnDelRow.Image = global::VGCatalog.Properties.Resources.cross;
+            this.btnDelRow.Location = new System.Drawing.Point(86, 27);
+            this.btnDelRow.Name = "btnDelRow";
+            this.btnDelRow.Size = new System.Drawing.Size(32, 23);
+            this.btnDelRow.TabIndex = 4;
+            this.btnDelRow.UseVisualStyleBackColor = true;
+            this.btnDelRow.Click += new System.EventHandler(this.btnRemoveGame_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
+            this.btnRefresh.Location = new System.Drawing.Point(48, 27);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(32, 23);
+            this.btnRefresh.TabIndex = 3;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = global::VGCatalog.Properties.Resources.disk;
+            this.btnSave.Location = new System.Drawing.Point(12, 27);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(30, 23);
+            this.btnSave.TabIndex = 2;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // tabMain
+            // 
+            this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabMain.Controls.Add(this.tpGames);
+            this.tabMain.Controls.Add(this.tpConsoles);
+            this.tabMain.Location = new System.Drawing.Point(0, 56);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.SelectedIndex = 0;
+            this.tabMain.Size = new System.Drawing.Size(795, 613);
+            this.tabMain.TabIndex = 7;
+            // 
+            // tpGames
+            // 
+            this.tpGames.Controls.Add(this.gridMain);
+            this.tpGames.Location = new System.Drawing.Point(4, 22);
+            this.tpGames.Name = "tpGames";
+            this.tpGames.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGames.Size = new System.Drawing.Size(787, 587);
+            this.tpGames.TabIndex = 0;
+            this.tpGames.Text = "Games";
+            this.tpGames.UseVisualStyleBackColor = true;
+            // 
+            // tpConsoles
+            // 
+            this.tpConsoles.Controls.Add(this.gridConsoles);
+            this.tpConsoles.Location = new System.Drawing.Point(4, 22);
+            this.tpConsoles.Name = "tpConsoles";
+            this.tpConsoles.Padding = new System.Windows.Forms.Padding(3);
+            this.tpConsoles.Size = new System.Drawing.Size(787, 587);
+            this.tpConsoles.TabIndex = 1;
+            this.tpConsoles.Text = "Consoles";
+            this.tpConsoles.UseVisualStyleBackColor = true;
+            // 
+            // gridConsoles
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.gridConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridConsoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridConsoles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colConsoleName,
+            this.colManufacturer,
+            this.colConsoleContainer,
+            this.colSwitchbox,
+            this.colSwitchboxNo,
+            this.colCID});
+            this.gridConsoles.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.gridConsoles.Location = new System.Drawing.Point(3, 6);
+            this.gridConsoles.Name = "gridConsoles";
+            this.gridConsoles.Size = new System.Drawing.Size(778, 444);
+            this.gridConsoles.TabIndex = 7;
+            this.gridConsoles.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridConsoles_UserDeletingRow);
+            // 
+            // colConsoleName
+            // 
+            this.colConsoleName.HeaderText = "Name";
+            this.colConsoleName.Name = "colConsoleName";
+            this.colConsoleName.Width = 150;
+            // 
+            // colManufacturer
+            // 
+            this.colManufacturer.HeaderText = "Manufacturer";
+            this.colManufacturer.Name = "colManufacturer";
+            this.colManufacturer.Width = 150;
+            // 
+            // colConsoleContainer
+            // 
+            this.colConsoleContainer.HeaderText = "Container #";
+            this.colConsoleContainer.Name = "colConsoleContainer";
+            this.colConsoleContainer.Width = 80;
+            // 
+            // colSwitchbox
+            // 
+            this.colSwitchbox.HeaderText = "Switchbox";
+            this.colSwitchbox.Name = "colSwitchbox";
+            // 
+            // colSwitchboxNo
+            // 
+            this.colSwitchboxNo.HeaderText = "# On Switchbox";
+            this.colSwitchboxNo.Name = "colSwitchboxNo";
+            // 
+            // colCID
+            // 
+            this.colCID.HeaderText = "CID";
+            this.colCID.Name = "colCID";
+            this.colCID.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 561);
-            this.Controls.Add(this.gridMain);
-            this.Controls.Add(this.btnRmoveConsole);
-            this.Controls.Add(this.btnRemoveGame);
+            this.ClientSize = new System.Drawing.Size(795, 557);
+            this.Controls.Add(this.tabMain);
+            this.Controls.Add(this.btnDelRow);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.mnuMain);
@@ -232,6 +329,10 @@
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
+            this.tabMain.ResumeLayout(false);
+            this.tpGames.ResumeLayout(false);
+            this.tpConsoles.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridConsoles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,12 +345,11 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmSave;
         private System.Windows.Forms.ToolStripMenuItem addConsoleToolStripMenuItem;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button btnRemoveGame;
-        private System.Windows.Forms.Button btnRmoveConsole;
+        private System.Windows.Forms.Button btnDelRow;
         private System.Windows.Forms.DataGridView gridMain;
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPublisher;
@@ -258,6 +358,16 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colBoxed;
         private System.Windows.Forms.DataGridViewTextBoxColumn colContainer;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGID;
+        private System.Windows.Forms.TabControl tabMain;
+        private System.Windows.Forms.TabPage tpGames;
+        private System.Windows.Forms.TabPage tpConsoles;
+        private System.Windows.Forms.DataGridView gridConsoles;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colConsoleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManufacturer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colConsoleContainer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchbox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchboxNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCID;
     }
 }
 
