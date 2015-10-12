@@ -82,12 +82,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\book--plus.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\book--minus.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\disk.png" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-excel1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

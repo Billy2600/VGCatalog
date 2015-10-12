@@ -29,12 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.addConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,9 +44,6 @@
             this.colBoxed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colGID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnDelRow = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tpGames = new System.Windows.Forms.TabPage();
             this.tpConsoles = new System.Windows.Forms.TabPage();
@@ -62,6 +57,16 @@
             this.tpContainers = new System.Windows.Forms.TabPage();
             this.tpSwitchboxes = new System.Windows.Forms.TabPage();
             this.ttipMain = new System.Windows.Forms.ToolTip(this.components);
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDelRow = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.tabMain.SuspendLayout();
@@ -75,6 +80,7 @@
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.exportToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
@@ -85,29 +91,15 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmSave,
-            this.addConsoleToolStripMenuItem});
+            this.tsmSave});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // tsmSave
-            // 
-            this.tsmSave.Image = global::VGCatalog.Properties.Resources.disk;
-            this.tsmSave.Name = "tsmSave";
-            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.tsmSave.Size = new System.Drawing.Size(142, 22);
-            this.tsmSave.Text = "Save";
-            this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
-            // 
-            // addConsoleToolStripMenuItem
-            // 
-            this.addConsoleToolStripMenuItem.Name = "addConsoleToolStripMenuItem";
-            this.addConsoleToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.addConsoleToolStripMenuItem.Text = "Add Console";
-            // 
             // editToolStripMenuItem
             // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -115,7 +107,8 @@
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.helpToolStripMenuItem1});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -123,15 +116,14 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // gridMain
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.gridMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.gridMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -196,39 +188,6 @@
             this.colGID.Name = "colGID";
             this.colGID.Visible = false;
             // 
-            // btnDelRow
-            // 
-            this.btnDelRow.Image = global::VGCatalog.Properties.Resources.cross;
-            this.btnDelRow.Location = new System.Drawing.Point(78, 27);
-            this.btnDelRow.Name = "btnDelRow";
-            this.btnDelRow.Size = new System.Drawing.Size(32, 23);
-            this.btnDelRow.TabIndex = 4;
-            this.ttipMain.SetToolTip(this.btnDelRow, "Delete");
-            this.btnDelRow.UseVisualStyleBackColor = true;
-            this.btnDelRow.Click += new System.EventHandler(this.btnRemoveGame_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
-            this.btnRefresh.Location = new System.Drawing.Point(40, 27);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(32, 23);
-            this.btnRefresh.TabIndex = 3;
-            this.ttipMain.SetToolTip(this.btnRefresh, "Refresh");
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Image = global::VGCatalog.Properties.Resources.disk;
-            this.btnSave.Location = new System.Drawing.Point(4, 27);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(30, 23);
-            this.btnSave.TabIndex = 2;
-            this.ttipMain.SetToolTip(this.btnSave, "Save");
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // tabMain
             // 
             this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -268,8 +227,8 @@
             // 
             // gridConsoles
             // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.gridConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.gridConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -341,6 +300,95 @@
             this.tpSwitchboxes.Text = "Switchboxes";
             this.tpSwitchboxes.UseVisualStyleBackColor = true;
             // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.excelToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // btnDelRow
+            // 
+            this.btnDelRow.Image = global::VGCatalog.Properties.Resources.cross;
+            this.btnDelRow.Location = new System.Drawing.Point(78, 27);
+            this.btnDelRow.Name = "btnDelRow";
+            this.btnDelRow.Size = new System.Drawing.Size(32, 23);
+            this.btnDelRow.TabIndex = 4;
+            this.ttipMain.SetToolTip(this.btnDelRow, "Delete");
+            this.btnDelRow.UseVisualStyleBackColor = true;
+            this.btnDelRow.Click += new System.EventHandler(this.btnRemoveGame_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
+            this.btnRefresh.Location = new System.Drawing.Point(40, 27);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(32, 23);
+            this.btnRefresh.TabIndex = 3;
+            this.ttipMain.SetToolTip(this.btnRefresh, "Refresh");
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = global::VGCatalog.Properties.Resources.disk;
+            this.btnSave.Location = new System.Drawing.Point(4, 27);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(30, 23);
+            this.btnSave.TabIndex = 2;
+            this.ttipMain.SetToolTip(this.btnSave, "Save");
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // tsmSave
+            // 
+            this.tsmSave.Image = global::VGCatalog.Properties.Resources.disk;
+            this.tsmSave.Name = "tsmSave";
+            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmSave.Size = new System.Drawing.Size(152, 22);
+            this.tsmSave.Text = "Save";
+            this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
+            // 
+            // excelToolStripMenuItem
+            // 
+            this.excelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAllToolStripMenuItem,
+            this.exportCurrentToolStripMenuItem});
+            this.excelToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.document_excel;
+            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.excelToolStripMenuItem.Text = "Excel";
+            // 
+            // exportAllToolStripMenuItem
+            // 
+            this.exportAllToolStripMenuItem.Name = "exportAllToolStripMenuItem";
+            this.exportAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportAllToolStripMenuItem.Text = "Export All";
+            // 
+            // exportCurrentToolStripMenuItem
+            // 
+            this.exportCurrentToolStripMenuItem.Name = "exportCurrentToolStripMenuItem";
+            this.exportCurrentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportCurrentToolStripMenuItem.Text = "Export Current";
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.helpToolStripMenuItem1.Text = "Help";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,7 +423,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmSave;
-        private System.Windows.Forms.ToolStripMenuItem addConsoleToolStripMenuItem;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnDelRow;
@@ -400,6 +447,12 @@
         private System.Windows.Forms.ToolTip ttipMain;
         private System.Windows.Forms.TabPage tpContainers;
         private System.Windows.Forms.TabPage tpSwitchboxes;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem excelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportCurrentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
     }
 }
 

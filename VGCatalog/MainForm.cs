@@ -35,7 +35,7 @@ namespace VGCatalog
             InitializeComponent();
         }
 
-        // Show help screen
+        // Show about screen
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             const string help =
@@ -43,6 +43,11 @@ namespace VGCatalog
                 "This program is licensed under the GNU General Public License v2, please read the included LICENSE text file\n" +
                 "Fugue Icons (C) 2013 Yusuke Kamiyamane. All rights reserved.";
             MessageBox.Show(this,help,"About",MessageBoxButtons.OK,MessageBoxIcon.Question);
+        }
+        // Show Help
+        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Fuck you!");
         }
 
         // On form load
@@ -297,6 +302,11 @@ namespace VGCatalog
         private void tsmSave_Click(object sender, EventArgs e)
         {
             btnSave_Click(sender, e);
+        }
+        // File menu refresh
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshLists();
         }
 
         private void gridConsoles_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
