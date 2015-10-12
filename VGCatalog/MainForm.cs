@@ -194,8 +194,8 @@ namespace VGCatalog
                         else
                             newGame.consoleId = 1;
 
-                        if (row.Cells["colContainer"].Value != null)
-                            newGame.boxed = row.Cells["colBoxed"].Value.ToString() == "1";
+                        if (row.Cells["colBoxed"].Value != null)
+                            newGame.boxed = Convert.ToBoolean(row.Cells["colBoxed"].Value);
                         else
                             newGame.boxed = false;
 
