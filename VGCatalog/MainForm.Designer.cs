@@ -29,13 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gridMain = new System.Windows.Forms.DataGridView();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPublisher = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,22 +66,26 @@
             this.tpContainers = new System.Windows.Forms.TabPage();
             this.tpSwitchboxes = new System.Windows.Forms.TabPage();
             this.ttipMain = new System.Windows.Forms.ToolTip(this.components);
-            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnDelRow = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.tsmSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.gridContainers = new System.Windows.Forms.DataGridView();
+            this.colContainerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridSwitchboxes = new System.Windows.Forms.DataGridView();
+            this.colSwitchboxName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNumSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.tabMain.SuspendLayout();
             this.tpGames.SuspendLayout();
             this.tpConsoles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridConsoles)).BeginInit();
+            this.tpContainers.SuspendLayout();
+            this.tpSwitchboxes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridContainers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSwitchboxes)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -96,6 +109,15 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // tsmSave
+            // 
+            this.tsmSave.Image = global::VGCatalog.Properties.Resources.disk;
+            this.tsmSave.Name = "tsmSave";
+            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.tsmSave.Size = new System.Drawing.Size(138, 22);
+            this.tsmSave.Text = "Save";
+            this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
+            // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -103,6 +125,46 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.excelToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // excelToolStripMenuItem
+            // 
+            this.excelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportAllToolStripMenuItem,
+            this.exportCurrentToolStripMenuItem});
+            this.excelToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.document_excel;
+            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.excelToolStripMenuItem.Text = "Excel";
+            // 
+            // exportAllToolStripMenuItem
+            // 
+            this.exportAllToolStripMenuItem.Name = "exportAllToolStripMenuItem";
+            this.exportAllToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exportAllToolStripMenuItem.Text = "Export All";
+            // 
+            // exportCurrentToolStripMenuItem
+            // 
+            this.exportCurrentToolStripMenuItem.Name = "exportCurrentToolStripMenuItem";
+            this.exportCurrentToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.exportCurrentToolStripMenuItem.Text = "Export Current";
+            this.exportCurrentToolStripMenuItem.Click += new System.EventHandler(this.exportCurrentToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -116,14 +178,22 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
+            this.helpToolStripMenuItem1.Text = "Help";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            // 
             // gridMain
             // 
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.gridMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.gridMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -227,8 +297,8 @@
             // 
             // gridConsoles
             // 
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.gridConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridConsoles.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.gridConsoles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -284,6 +354,7 @@
             // 
             // tpContainers
             // 
+            this.tpContainers.Controls.Add(this.gridContainers);
             this.tpContainers.Location = new System.Drawing.Point(4, 22);
             this.tpContainers.Name = "tpContainers";
             this.tpContainers.Size = new System.Drawing.Size(787, 587);
@@ -293,20 +364,13 @@
             // 
             // tpSwitchboxes
             // 
+            this.tpSwitchboxes.Controls.Add(this.gridSwitchboxes);
             this.tpSwitchboxes.Location = new System.Drawing.Point(4, 22);
             this.tpSwitchboxes.Name = "tpSwitchboxes";
             this.tpSwitchboxes.Size = new System.Drawing.Size(787, 587);
             this.tpSwitchboxes.TabIndex = 3;
             this.tpSwitchboxes.Text = "Switchboxes";
             this.tpSwitchboxes.UseVisualStyleBackColor = true;
-            // 
-            // exportToolStripMenuItem
-            // 
-            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.excelToolStripMenuItem});
-            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.exportToolStripMenuItem.Text = "Export";
             // 
             // btnDelRow
             // 
@@ -341,53 +405,69 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // tsmSave
+            // gridContainers
             // 
-            this.tsmSave.Image = global::VGCatalog.Properties.Resources.disk;
-            this.tsmSave.Name = "tsmSave";
-            this.tsmSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.tsmSave.Size = new System.Drawing.Size(152, 22);
-            this.tsmSave.Text = "Save";
-            this.tsmSave.Click += new System.EventHandler(this.tsmSave_Click);
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridContainers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.gridContainers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridContainers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridContainers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colContainerName,
+            this.colConID});
+            this.gridContainers.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.gridContainers.Location = new System.Drawing.Point(6, 6);
+            this.gridContainers.Name = "gridContainers";
+            this.gridContainers.Size = new System.Drawing.Size(778, 444);
+            this.gridContainers.TabIndex = 8;
             // 
-            // excelToolStripMenuItem
+            // colContainerName
             // 
-            this.excelToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportAllToolStripMenuItem,
-            this.exportCurrentToolStripMenuItem});
-            this.excelToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.document_excel;
-            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.excelToolStripMenuItem.Text = "Excel";
+            this.colContainerName.HeaderText = "Name";
+            this.colContainerName.Name = "colContainerName";
+            this.colContainerName.Width = 150;
             // 
-            // exportAllToolStripMenuItem
+            // colConID
             // 
-            this.exportAllToolStripMenuItem.Name = "exportAllToolStripMenuItem";
-            this.exportAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportAllToolStripMenuItem.Text = "Export All";
+            this.colConID.HeaderText = "con_id";
+            this.colConID.Name = "colConID";
+            this.colConID.Visible = false;
             // 
-            // exportCurrentToolStripMenuItem
+            // gridSwitchboxes
             // 
-            this.exportCurrentToolStripMenuItem.Name = "exportCurrentToolStripMenuItem";
-            this.exportCurrentToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportCurrentToolStripMenuItem.Text = "Export Current";
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.gridSwitchboxes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.gridSwitchboxes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridSwitchboxes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSwitchboxes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSwitchboxName,
+            this.colNumSwitches,
+            this.colSID});
+            this.gridSwitchboxes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.gridSwitchboxes.Location = new System.Drawing.Point(6, 6);
+            this.gridSwitchboxes.Name = "gridSwitchboxes";
+            this.gridSwitchboxes.Size = new System.Drawing.Size(778, 444);
+            this.gridSwitchboxes.TabIndex = 9;
             // 
-            // refreshToolStripMenuItem
+            // colSwitchboxName
             // 
-            this.refreshToolStripMenuItem.Image = global::VGCatalog.Properties.Resources.arrow_circle_double_135;
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.refreshToolStripMenuItem.Text = "Refresh";
-            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            this.colSwitchboxName.HeaderText = "Name";
+            this.colSwitchboxName.Name = "colSwitchboxName";
+            this.colSwitchboxName.Width = 150;
             // 
-            // helpToolStripMenuItem1
+            // colNumSwitches
             // 
-            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.helpToolStripMenuItem1.Text = "Help";
-            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            this.colNumSwitches.HeaderText = "# of Switches";
+            this.colNumSwitches.Name = "colNumSwitches";
+            // 
+            // colSID
+            // 
+            this.colSID.HeaderText = "sid";
+            this.colSID.Name = "colSID";
+            this.colSID.Visible = false;
             // 
             // MainForm
             // 
@@ -410,6 +490,10 @@
             this.tpGames.ResumeLayout(false);
             this.tpConsoles.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridConsoles)).EndInit();
+            this.tpContainers.ResumeLayout(false);
+            this.tpSwitchboxes.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridContainers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSwitchboxes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -453,6 +537,13 @@
         private System.Windows.Forms.ToolStripMenuItem exportAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportCurrentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
+        private System.Windows.Forms.DataGridView gridContainers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colContainerName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colConID;
+        private System.Windows.Forms.DataGridView gridSwitchboxes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchboxName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNumSwitches;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSID;
     }
 }
 

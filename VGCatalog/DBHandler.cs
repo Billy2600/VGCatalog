@@ -57,6 +57,9 @@ namespace VGCatalog
             public int numSwitches;
         }
 
+        // Enum for specifying mode
+        public enum Modes { Games, Console, Container, Switchbox };
+
         // Connection string
         private const string connectString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=VGCatalog;Integrated Security=SSPI";
 
@@ -68,6 +71,10 @@ namespace VGCatalog
         {
 
         }
+
+        /* ==========================
+         * GAMES
+         * ==========================*/
 
         // Get the data for all games
         public List<GameInfo> GetAllGames()
@@ -183,6 +190,10 @@ namespace VGCatalog
                 connection.Close();
             }
         }
+
+        /* ==========================
+         * CONSOLES
+         * ==========================*/
 
         // Get the data for all consoles
         public List<ConsoleInfo> GetAllConsoles()
@@ -344,6 +355,71 @@ namespace VGCatalog
                 // Disconnect
                 connection.Close();
             }
+        }
+
+        /* ==========================
+         * CONTAINERS
+         * ==========================*/
+
+        // Get call containers
+        public List<ContainerInfo> GetAllContainers()
+        {
+            // Init list
+            List<ContainerInfo> containerList = new List<ContainerInfo>();
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT con_id, name FROM Containers ORDER BY name asc", connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            ContainerInfo c = new ContainerInfo();
+                            c.con_id = reader.GetInt32(reader.GetOrdinal("con_id"));
+                            c.name = reader.GetString(reader.GetOrdinal("name"));
+                            containerList.Add(c);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+
+            // return lsit
+            return containerList;
+        }
+
+        /* ==========================
+         * SWITCHBOXES
+         * ==========================*/
+        public List<SwitchboxInfo> GetAllSwitchboxes()
+        {
+            // Init list
+            List<SwitchboxInfo> switchboxList = new List<SwitchboxInfo>();
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT sid, name, num_switches FROM Switchboxes ORDER BY name asc", connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            SwitchboxInfo s = new SwitchboxInfo();
+                            s.sid = reader.GetInt32(reader.GetOrdinal("sid"));
+                            s.name = reader.GetString(reader.GetOrdinal("name"));
+                            s.numSwitches = reader.GetInt32(reader.GetOrdinal("num_switches"));
+                            switchboxList.Add(s);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+
+            // return lsit
+            return switchboxList;
         }
     }
 }

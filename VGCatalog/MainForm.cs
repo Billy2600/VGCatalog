@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace VGCatalog
 {
@@ -81,6 +82,24 @@ namespace VGCatalog
             }
         }
 
+        // Build container list
+        private void BuildContainerList(List<DBHandler.ContainerInfo> containerList)
+        {
+            foreach(var c in containerList)
+            {
+                this.gridContainers.Rows.Add(c.name, c.con_id);
+            }
+        }
+
+        // Build switchbox list
+        private void BuildSwitchboxList(List<DBHandler.SwitchboxInfo> switchboxList)
+        {
+            foreach(var s in switchboxList)
+            {
+                this.gridSwitchboxes.Rows.Add(s.name, s.numSwitches, s.numSwitches);
+            }
+        }
+
         // Refresh lists
         private void RefreshLists()
         {
@@ -93,6 +112,14 @@ namespace VGCatalog
             gridConsoles.Rows.Clear();
             gridConsoles.Refresh();
             BuildConsoleList(db.GetAllConsoles());
+            // Containers
+            gridContainers.Rows.Clear();
+            gridContainers.Refresh();
+            BuildContainerList(db.GetAllContainers());
+            // Switchboxes
+            gridSwitchboxes.Rows.Clear();
+            gridSwitchboxes.Refresh();
+            BuildSwitchboxList(db.GetAllSwitchboxes());
 
             ignoreChange = false;
         }
@@ -103,6 +130,13 @@ namespace VGCatalog
             // Games tab is selected
             if(tabMain.SelectedTab.Name == "tpGames")
             {
+                // Make sure we have rows selected
+                if (gridMain.SelectedRows.Count < 1)
+                {
+                    MessageBox.Show("No rows selected", "Error");
+                    return;
+                }
+                    
                 // Get confirmation from user
                 DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete the selected game(s)?", "Are you sure?", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
@@ -122,6 +156,13 @@ namespace VGCatalog
             // Consoles tab is selected
             else if(tabMain.SelectedTab.Name == "tpConsoles")
             {
+                // Make sure we have rows selected
+                if (gridConsoles.SelectedRows.Count < 1)
+                {
+                    MessageBox.Show("No rows selected", "Error");
+                    return;
+                }
+
                 // Get confirmation from user
                 DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete the selected consoles(s)?", "Are you sure?", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
@@ -229,7 +270,7 @@ namespace VGCatalog
                 {
                     if (CheckEmptyRow(row)) continue;
 
-                    if (row.Cells["colCID"].Value == null || consolesChangedRows.Contains(row.Cells["colGID"].RowIndex))
+                    if (row.Cells["colCID"].Value == null || consolesChangedRows.Contains(row.Cells["colCID"].RowIndex))
                     {
                         DBHandler.ConsoleInfo newConsole = new DBHandler.ConsoleInfo();
                         if (row.Cells["colConsoleName"].Value != null)
@@ -340,6 +381,51 @@ namespace VGCatalog
         {
             if (!ignoreChange && e.RowIndex != -1)
                 consolesChangedRows.Add(e.RowIndex);
+        }
+
+        // Export current grid view
+        private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Prompt for file
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Excel Documents (*.xls)|*.xls";
+            sfd.FileName = "export.xls";
+            if(sfd.ShowDialog() == DialogResult.OK)
+            {
+                // Choose current grid view
+                DataGridView current;
+                if (tabMain.SelectedTab.Name == "Consoles")
+                    current = gridConsoles;
+                else
+                    current = gridMain;
+
+                string output = "";
+                string headers = ""; // Export headers
+                for (int i = 0; i < current.Columns.Count; i++)
+                    headers = headers.ToString() + Convert.ToString(current.Columns[i].HeaderText) + "\t";
+                output += headers + "\r\n";
+
+                // Export data
+                for(int i = 0; i < current.RowCount; i++)
+                {
+                    string line = "";
+                    for(int j = 0; j < current.Rows[i].Cells.Count; j++)
+                    {
+                        line = line.ToString() + Convert.ToString(current.Rows[i].Cells[j].Value) + "\t";
+                    }
+                    output += line + "\r\n";
+                }
+
+                Encoding utf16 = Encoding.GetEncoding(1254);
+                byte[] bOutput = utf16.GetBytes(output);
+                FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
+                BinaryWriter bw = new BinaryWriter(fs);
+                bw.Write(bOutput, 0, bOutput.Length);
+                bw.Flush();
+                bw.Close();
+                fs.Close();
+                MessageBox.Show("File " + sfd.FileName + " created", "Success");
+            }
         }
     }
 }
