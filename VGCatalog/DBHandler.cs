@@ -41,6 +41,8 @@ namespace VGCatalog
             public int containerId;
             public int switchBoxId;
             public int switchBoxNo;
+            // Used for ComboBox cell
+            public string switchBoxName;
         }
 
         // Container info struct
@@ -205,7 +207,7 @@ namespace VGCatalog
 
             // Get all game info and store into list
             using (SqlConnection connection = new SqlConnection(connectString))
-            using (SqlCommand cmd = new SqlCommand("SELECT cid, name, manufacturer, container_id, switchbox_id, switchbox_no FROM Consoles ORDER BY name asc", connection))
+            using (SqlCommand cmd = new SqlCommand("SELECT cid, Consoles.name, manufacturer, container_id, switchbox_id, switchbox_no, Switchboxes.name as SName FROM Consoles LEFT JOIN Switchboxes ON Consoles.switchbox_id = Switchboxes.sid ORDER BY Consoles.name asc", connection))
             {
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -233,6 +235,9 @@ namespace VGCatalog
 
                             int sbNoIndex = reader.GetOrdinal("switchbox_no");
                             if (!reader.IsDBNull(sbNoIndex)) c.switchBoxNo = reader.GetInt32(sbNoIndex);
+
+                            int sbNameIndex = reader.GetOrdinal("SName");
+                            if (!reader.IsDBNull(sbNameIndex)) c.switchBoxName = reader.GetString(sbNameIndex);
 
                             consoleList.Add(c);
                         }
@@ -423,7 +428,7 @@ namespace VGCatalog
             int containerID = 0;
 
             using (SqlConnection connection = new SqlConnection(connectString))
-            using (SqlCommand cmd = new SqlCommand("SELECT cid FROM Containers WHERE name = @Name", connection))
+            using (SqlCommand cmd = new SqlCommand("SELECT con_id FROM Containers WHERE name = @Name", connection))
             {
                 cmd.Parameters.AddWithValue("@Name", name);
                 connection.Open();
@@ -434,7 +439,7 @@ namespace VGCatalog
                     {
                         while (reader.Read())
                         {
-                            containerID = reader.GetInt32(reader.GetOrdinal("cid"));
+                            containerID = reader.GetInt32(reader.GetOrdinal("con_id"));
                         }
                     }
                 }
@@ -525,6 +530,56 @@ namespace VGCatalog
             return switchboxList;
         }
 
+        public List<string> GetSwitchboxNames()
+        {
+            List<string> switchboxNames = new List<string>();
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT name FROM Switchboxes ORDER BY name asc", connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Check if the reader has any rows at all before starting to read
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            switchboxNames.Add(reader.GetString(reader.GetOrdinal("name")));
+                        }
+                    }
+                }
+                // Disconnect
+                connection.Close();
+            }
+            return switchboxNames;
+        }
+
+        public int GetSwitchboxID(string name)
+        {
+            int switchboxID = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT sid FROM Switchboxes WHERE name = @Name", connection))
+            {
+                cmd.Parameters.AddWithValue("@Name", name);
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Check if the reader has any rows at all before starting to read
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            switchboxID = reader.GetInt32(reader.GetOrdinal("sid"));
+                        }
+                    }
+                }
+                // Disconnect
+                connection.Close();
+            }
+            return switchboxID;
+        }
+
         public void DeleteSwitchbox(int sid)
         {
             using (SqlConnection connection = new SqlConnection(connectString))
@@ -561,7 +616,7 @@ namespace VGCatalog
         public void UpdateSwitchbox(SwitchboxInfo updateSwitchbox)
         {
             using (SqlConnection connection = new SqlConnection(connectString))
-            using (SqlCommand cmd = new SqlCommand("UPDATE Switchboxs SET name = @Name, num_switches = @NuMSwitches WHERE sid = @Sid", connection))
+            using (SqlCommand cmd = new SqlCommand("UPDATE Switchboxes SET name = @Name, num_switches = @NumSwitches WHERE sid = @Sid", connection))
             {
                 // Add parameters
                 cmd.Parameters.AddWithValue("@Sid", updateSwitchbox.sid);

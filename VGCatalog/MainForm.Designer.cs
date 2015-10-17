@@ -50,12 +50,6 @@
             this.tpGames = new System.Windows.Forms.TabPage();
             this.tpConsoles = new System.Windows.Forms.TabPage();
             this.gridConsoles = new System.Windows.Forms.DataGridView();
-            this.colConsoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colManufacturer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colConsoleContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSwitchbox = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSwitchboxNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tpContainers = new System.Windows.Forms.TabPage();
             this.tpSwitchboxes = new System.Windows.Forms.TabPage();
             this.ttipMain = new System.Windows.Forms.ToolTip(this.components);
@@ -74,8 +68,14 @@
             this.colContainer = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colGID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSwitchboxName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNumSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNumSwitches = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colSID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConsoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colManufacturer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConsoleContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSwitchbox = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colSwitchboxNo = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colCID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mnuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.tabMain.SuspendLayout();
@@ -212,6 +212,7 @@
             this.gridMain.Size = new System.Drawing.Size(787, 444);
             this.gridMain.TabIndex = 6;
             this.gridMain.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellValueChanged);
+            this.gridMain.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridMain_DataError);
             this.gridMain.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridMain_UserDeletingRow);
             // 
             // tabMain
@@ -272,41 +273,8 @@
             this.gridConsoles.Size = new System.Drawing.Size(787, 444);
             this.gridConsoles.TabIndex = 7;
             this.gridConsoles.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridConsoles_CellValueChanged);
+            this.gridConsoles.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridConsoles_DataError);
             this.gridConsoles.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridConsoles_UserDeletingRow);
-            // 
-            // colConsoleName
-            // 
-            this.colConsoleName.HeaderText = "Name";
-            this.colConsoleName.Name = "colConsoleName";
-            this.colConsoleName.Width = 150;
-            // 
-            // colManufacturer
-            // 
-            this.colManufacturer.HeaderText = "Manufacturer";
-            this.colManufacturer.Name = "colManufacturer";
-            this.colManufacturer.Width = 150;
-            // 
-            // colConsoleContainer
-            // 
-            this.colConsoleContainer.HeaderText = "Container #";
-            this.colConsoleContainer.Name = "colConsoleContainer";
-            this.colConsoleContainer.Width = 80;
-            // 
-            // colSwitchbox
-            // 
-            this.colSwitchbox.HeaderText = "Switchbox";
-            this.colSwitchbox.Name = "colSwitchbox";
-            // 
-            // colSwitchboxNo
-            // 
-            this.colSwitchboxNo.HeaderText = "# On Switchbox";
-            this.colSwitchboxNo.Name = "colSwitchboxNo";
-            // 
-            // colCID
-            // 
-            this.colCID.HeaderText = "CID";
-            this.colCID.Name = "colCID";
-            this.colCID.Visible = false;
             // 
             // tpContainers
             // 
@@ -378,6 +346,7 @@
             this.gridContainers.Size = new System.Drawing.Size(787, 444);
             this.gridContainers.TabIndex = 8;
             this.gridContainers.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridContainers_CellValueChanged);
+            this.gridContainers.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridContainers_DataError);
             this.gridContainers.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridContainers_UserDeletingRow);
             // 
             // colContainerName
@@ -410,6 +379,7 @@
             this.gridSwitchboxes.Size = new System.Drawing.Size(787, 444);
             this.gridSwitchboxes.TabIndex = 9;
             this.gridSwitchboxes.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridSwitchboxes_CellValueChanged);
+            this.gridSwitchboxes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridSwitchboxes_DataError);
             this.gridSwitchboxes.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridSwitchboxes_UserDeletingRow);
             // 
             // colName
@@ -466,13 +436,74 @@
             // colNumSwitches
             // 
             this.colNumSwitches.HeaderText = "# of Switches";
+            this.colNumSwitches.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"});
             this.colNumSwitches.Name = "colNumSwitches";
+            this.colNumSwitches.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colNumSwitches.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // colSID
             // 
             this.colSID.HeaderText = "sid";
             this.colSID.Name = "colSID";
             this.colSID.Visible = false;
+            // 
+            // colConsoleName
+            // 
+            this.colConsoleName.HeaderText = "Name";
+            this.colConsoleName.Name = "colConsoleName";
+            this.colConsoleName.Width = 150;
+            // 
+            // colManufacturer
+            // 
+            this.colManufacturer.HeaderText = "Manufacturer";
+            this.colManufacturer.Name = "colManufacturer";
+            this.colManufacturer.Width = 150;
+            // 
+            // colConsoleContainer
+            // 
+            this.colConsoleContainer.HeaderText = "Container";
+            this.colConsoleContainer.Name = "colConsoleContainer";
+            this.colConsoleContainer.Width = 80;
+            // 
+            // colSwitchbox
+            // 
+            this.colSwitchbox.HeaderText = "Switchbox";
+            this.colSwitchbox.Name = "colSwitchbox";
+            this.colSwitchbox.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSwitchbox.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colSwitchboxNo
+            // 
+            this.colSwitchboxNo.HeaderText = "# On Switchbox";
+            this.colSwitchboxNo.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"});
+            this.colSwitchboxNo.Name = "colSwitchboxNo";
+            this.colSwitchboxNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSwitchboxNo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colCID
+            // 
+            this.colCID.HeaderText = "CID";
+            this.colCID.Name = "colCID";
+            this.colCID.Visible = false;
             // 
             // MainForm
             // 
@@ -520,12 +551,6 @@
         private System.Windows.Forms.TabPage tpGames;
         private System.Windows.Forms.TabPage tpConsoles;
         private System.Windows.Forms.DataGridView gridConsoles;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colConsoleName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colManufacturer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colConsoleContainer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchbox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchboxNo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCID;
         private System.Windows.Forms.ToolTip ttipMain;
         private System.Windows.Forms.TabPage tpContainers;
         private System.Windows.Forms.TabPage tpSwitchboxes;
@@ -547,8 +572,14 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn colContainer;
         private System.Windows.Forms.DataGridViewTextBoxColumn colGID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchboxName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNumSwitches;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colNumSwitches;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colConsoleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colManufacturer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colConsoleContainer;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colSwitchbox;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colSwitchboxNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCID;
     }
 }
 

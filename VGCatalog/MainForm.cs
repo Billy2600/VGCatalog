@@ -33,6 +33,8 @@ namespace VGCatalog
         // so we can add data programatically without storing changed rows
         bool ignoreChange = false;
 
+        private Random rnd = new Random();
+
         public MainForm()
         {
             InitializeComponent();
@@ -63,9 +65,9 @@ namespace VGCatalog
         private void BuildGameList(List<DBHandler.GameInfo> gameList)
         {
             // Put console names into datagridview combobox
-            (this.gridMain.Columns[3] as DataGridViewComboBoxColumn).DataSource = db.GetConsoleNames();
+            (this.gridMain.Columns["colConsole"] as DataGridViewComboBoxColumn).DataSource = db.GetConsoleNames();
             // Do the same for container names
-            (this.gridMain.Columns[5] as DataGridViewComboBoxColumn).DataSource = db.GetContainerNames();
+            (this.gridMain.Columns["colContainer"] as DataGridViewComboBoxColumn).DataSource = db.GetContainerNames();
 
             // Populate DataGridView
             // This is not the standard way to do it, but I'm rolling my own for future possibility of non MSSQL DBs
@@ -80,9 +82,12 @@ namespace VGCatalog
         // Build console list
         private void BuildConsoleList(List<DBHandler.ConsoleInfo> consoleList)
         {
-            foreach(var c in consoleList)
+            (this.gridConsoles.Columns["colSwitchbox"] as DataGridViewComboBoxColumn).DataSource = db.GetSwitchboxNames();
+
+            for (int i = 0; i < consoleList.Count; i++)
             {
-                this.gridConsoles.Rows.Add(c.name, c.manufacturer, c.containerId, c.switchBoxId, c.switchBoxNo, c.cid);
+                DBHandler.ConsoleInfo c = consoleList[i];
+                this.gridConsoles.Rows.Add(c.name, c.manufacturer, c.containerId, c.switchBoxName, c.switchBoxNo.ToString(), c.cid);
             }
         }
 
@@ -98,9 +103,9 @@ namespace VGCatalog
         // Build switchbox list
         private void BuildSwitchboxList(List<DBHandler.SwitchboxInfo> switchboxList)
         {
-            foreach(var s in switchboxList)
+            foreach (var s in switchboxList)
             {
-                this.gridSwitchboxes.Rows.Add(s.name, s.numSwitches, s.sid);
+                this.gridSwitchboxes.Rows.Add(s.name, s.numSwitches.ToString(), s.sid);
             }
         }
 
@@ -341,8 +346,8 @@ namespace VGCatalog
                             newConsole.containerId = Convert.ToInt32(row.Cells["colConsoleContainer"].Value);
                         else
                             newConsole.containerId = 0;
-                        if (row.Cells["colSwitchbox"].Value != null && Int32.TryParse(row.Cells["colConsoleContainer"].Value.ToString(), out test))
-                            newConsole.switchBoxId = Convert.ToInt32(row.Cells["colSwitchbox"].Value);
+                        if (row.Cells["colSwitchbox"].Value != null)
+                            newConsole.switchBoxId = db.GetSwitchboxID(row.Cells["colSwitchbox"].Value.ToString());
                         else
                             newConsole.switchBoxId = 0;
                         if (row.Cells["colSwitchboxNo"].Value != null && Int32.TryParse(row.Cells["colConsoleContainer"].Value.ToString(), out test))
@@ -406,6 +411,10 @@ namespace VGCatalog
                         DBHandler.SwitchboxInfo newSwitchbox = new DBHandler.SwitchboxInfo();
                         if (row.Cells["colSwitchboxName"].Value != null)
                             newSwitchbox.name = row.Cells["colSwitchboxName"].Value.ToString();
+                        else
+                            newSwitchbox.name = "[UNTITLED]";
+                        if (row.Cells["colNumSwitches"].Value != null && Int32.TryParse(row.Cells["colConsoleContainer"].Value.ToString(), out test))
+                            newSwitchbox.numSwitches = Convert.ToInt32(row.Cells["colNumSwitches"].Value);
                         else
                             newSwitchbox.name = "[UNTITLED]";
 
@@ -588,6 +597,27 @@ namespace VGCatalog
                 fs.Close();
                 MessageBox.Show("File " + sfd.FileName + " created", "Success");
             }
+        }
+
+        // Data error
+        private void gridConsoles_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            
+        }
+
+        private void gridSwitchboxes_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+        }
+
+        private void gridContainers_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
+        }
+
+        private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+
         }
     }
 }
