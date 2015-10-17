@@ -46,7 +46,7 @@ namespace VGCatalog
             const string help =
                 "VGCatalog by William McPherson 2015\n" +
                 "This program is licensed under the GNU General Public License v2, please read the included LICENSE text file\n" +
-                "Fugue Icons (C) 2013 Yusuke Kamiyamane. All rights reserved.";
+                "Fugue Icons \u00a9 2013 Yusuke Kamiyamane. All rights reserved.";
             MessageBox.Show(this,help,"About",MessageBoxButtons.OK,MessageBoxIcon.Question);
         }
         // Show Help
@@ -554,6 +554,29 @@ namespace VGCatalog
                 switchboxesChangedRows.Add(e.RowIndex);
         }
 
+        // Convert datagrid view into text
+        private string GridToText(DataGridView grid)
+        {
+            string output = "";
+            string headers = ""; // Export headers
+            for (int i = 0; i < grid.Columns.Count; i++)
+                headers = headers.ToString() + Convert.ToString(grid.Columns[i].HeaderText) + "\t";
+            output += headers + "\r\n";
+
+            // Export data
+            for (int i = 0; i < grid.RowCount; i++)
+            {
+                string line = "";
+                for (int j = 0; j < grid.Rows[i].Cells.Count; j++)
+                {
+                    line = line.ToString() + Convert.ToString(grid.Rows[i].Cells[j].Value) + "\t";
+                }
+                output += line + "\r\n";
+            }
+
+            return output;
+        }
+
         // Export current grid view
         private void exportCurrentToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -565,27 +588,43 @@ namespace VGCatalog
             {
                 // Choose current grid view
                 DataGridView current;
-                if (tabMain.SelectedTab.Name == "Consoles")
+                if (tabMain.SelectedTab.Name == "tpConsoles")
                     current = gridConsoles;
+                else if (tabMain.SelectedTab.Name == "tpContainers")
+                    current = gridContainers;
+                else if (tabMain.SelectedTab.Name == "tpSwitchboxes")
+                    current = gridSwitchboxes;
                 else
                     current = gridMain;
 
-                string output = "";
-                string headers = ""; // Export headers
-                for (int i = 0; i < current.Columns.Count; i++)
-                    headers = headers.ToString() + Convert.ToString(current.Columns[i].HeaderText) + "\t";
-                output += headers + "\r\n";
+                string output = GridToText(current);
 
-                // Export data
-                for(int i = 0; i < current.RowCount; i++)
-                {
-                    string line = "";
-                    for(int j = 0; j < current.Rows[i].Cells.Count; j++)
-                    {
-                        line = line.ToString() + Convert.ToString(current.Rows[i].Cells[j].Value) + "\t";
-                    }
-                    output += line + "\r\n";
-                }
+                Encoding utf16 = Encoding.GetEncoding(1254);
+                byte[] bOutput = utf16.GetBytes(output);
+                FileStream fs = new FileStream(sfd.FileName, FileMode.Create);
+                BinaryWriter bw = new BinaryWriter(fs);
+                bw.Write(bOutput, 0, bOutput.Length);
+                bw.Flush();
+                bw.Close();
+                fs.Close();
+                MessageBox.Show("File " + sfd.FileName + " created", "Success");
+            }
+        }
+
+        // Export all grid views
+        private void exportAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Prompt for file
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Excel Documents (*.xls)|*.xls";
+            sfd.FileName = "export.xls";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                // Compile grid views
+                string output = GridToText(gridMain);
+                output += GridToText(gridConsoles);
+                output += GridToText(gridContainers);
+                output += GridToText(gridSwitchboxes);
 
                 Encoding utf16 = Encoding.GetEncoding(1254);
                 byte[] bOutput = utf16.GetBytes(output);
@@ -619,5 +658,7 @@ namespace VGCatalog
         {
 
         }
+
+        
     }
 }
