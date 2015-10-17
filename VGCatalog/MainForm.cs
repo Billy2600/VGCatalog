@@ -27,6 +27,8 @@ namespace VGCatalog
         // Hash set used to avoid duplicates
         private HashSet<int> mainChangedRows = new HashSet<int>();
         private HashSet<int> consolesChangedRows = new HashSet<int>();
+        private HashSet<int> containersChangedRows = new HashSet<int>();
+        private HashSet<int> switchboxesChangedRows = new HashSet<int>();
         // Flag to ignore changes to datagridviews
         // so we can add data programatically without storing changed rows
         bool ignoreChange = false;
@@ -62,13 +64,15 @@ namespace VGCatalog
         {
             // Put console names into datagridview combobox
             (this.gridMain.Columns[3] as DataGridViewComboBoxColumn).DataSource = db.GetConsoleNames();
+            // Do the same for container names
+            (this.gridMain.Columns[5] as DataGridViewComboBoxColumn).DataSource = db.GetContainerNames();
 
             // Populate DataGridView
             // This is not the standard way to do it, but I'm rolling my own for future possibility of non MSSQL DBs
             foreach (var g in gameList)
             {
                 // Turn boxed into string
-                this.gridMain.Rows.Add(g.name, g.publisher, g.genre, g.consoleName, g.boxed, g.containerId,g.gid);
+                this.gridMain.Rows.Add(g.name, g.publisher, g.genre, g.consoleName, g.boxed, g.containerName,g.gid);
             }
             //this.gridMain.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
@@ -96,7 +100,7 @@ namespace VGCatalog
         {
             foreach(var s in switchboxList)
             {
-                this.gridSwitchboxes.Rows.Add(s.name, s.numSwitches, s.numSwitches);
+                this.gridSwitchboxes.Rows.Add(s.name, s.numSwitches, s.sid);
             }
         }
 
@@ -164,13 +168,13 @@ namespace VGCatalog
                 }
 
                 // Get confirmation from user
-                DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete the selected consoles(s)?", "Are you sure?", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete the selected console(s)?", "Are you sure?", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
                 {
                     // Delete out of database if applicable
                     foreach (DataGridViewRow row in gridConsoles.SelectedRows)
                     {
-                        if (row.Cells["colGID"].Value != null)
+                        if (row.Cells["colCID"].Value != null)
                         {
                             db.DeleteConsole(Convert.ToInt32(row.Cells["colCID"].Value));
                         }
@@ -178,7 +182,59 @@ namespace VGCatalog
                     RefreshLists();
                 }
             }
-            
+
+            // Containers tab is selected
+            else if (tabMain.SelectedTab.Name == "tpContainers")
+            {
+                // Make sure we have rows selected
+                if (gridContainers.SelectedRows.Count < 1)
+                {
+                    MessageBox.Show("No rows selected", "Error");
+                    return;
+                }
+
+                // Get confirmation from user
+                DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete the selected container(s)?", "Are you sure?", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.Yes)
+                {
+                    // Delete out of database if applicable
+                    foreach (DataGridViewRow row in gridContainers.SelectedRows)
+                    {
+                        if (row.Cells["colConID"].Value != null)
+                        {
+                            db.DeleteContainer(Convert.ToInt32(row.Cells["colConID"].Value));
+                        }
+                    }
+                    RefreshLists();
+                }
+            }
+
+            // Switchbox tab is selected
+            else if (tabMain.SelectedTab.Name == "tpSwitchboxes")
+            {
+                // Make sure we have rows selected
+                if (gridSwitchboxes.SelectedRows.Count < 1)
+                {
+                    MessageBox.Show("No rows selected", "Error");
+                    return;
+                }
+
+                // Get confirmation from user
+                DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete the selected switchbox(es)?", "Are you sure?", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.Yes)
+                {
+                    // Delete out of database if applicable
+                    foreach (DataGridViewRow row in gridSwitchboxes.SelectedRows)
+                    {
+                        if (row.Cells["colSID"].Value != null)
+                        {
+                            db.DeleteSwitchbox(Convert.ToInt32(row.Cells["colSID"].Value));
+                        }
+                    }
+                    RefreshLists();
+                }
+            }
+
         }
 
         // Check for empty row
@@ -241,9 +297,9 @@ namespace VGCatalog
                             newGame.boxed = false;
 
                         if (row.Cells["colContainer"].Value != null)
-                            newGame.containerId = Convert.ToInt32(row.Cells["colContainer"].Value);
+                            newGame.containerId = db.GetContainerID(row.Cells["colContainer"].Value.ToString());
                         else
-                            newGame.containerId = 0;
+                            newGame.containerId = 1;
 
                         // Insert it
                         if (row.Cells["colGID"].Value == null)
@@ -308,6 +364,66 @@ namespace VGCatalog
                 }
             }
 
+            // Containers tab is selected
+            else if (tabMain.SelectedTab.Name == "tpContainers")
+            {
+                foreach (DataGridViewRow row in gridContainers.Rows)
+                {
+                    if (CheckEmptyRow(row)) continue;
+
+                    if (row.Cells["colConID"].Value == null || containersChangedRows.Contains(row.Cells["colConID"].RowIndex))
+                    {
+                        DBHandler.ContainerInfo newContainer = new DBHandler.ContainerInfo();
+                        if (row.Cells["colContainerName"].Value != null)
+                            newContainer.name = row.Cells["colContainerName"].Value.ToString();
+                        else
+                            newContainer.name = "[UNTITLED]";
+
+                        if (row.Cells["colConID"].Value == null)
+                            db.InsertContainer(newContainer);
+                        else
+                        {
+                            if (row.Cells["colConID"].Value != null && Int32.TryParse(row.Cells["colConID"].Value.ToString(), out test))
+                            {
+                                newContainer.con_id = Convert.ToInt32(row.Cells["colConID"].Value);
+                                db.UpdateContainer(newContainer);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            // Switchbox tab is selected
+            else if (tabMain.SelectedTab.Name == "tpSwitchboxes")
+            {
+                foreach (DataGridViewRow row in gridSwitchboxes.Rows)
+                {
+                    if (CheckEmptyRow(row)) continue;
+
+                    if (row.Cells["colSID"].Value == null || switchboxesChangedRows.Contains(row.Cells["colSID"].RowIndex))
+                    {
+                        DBHandler.SwitchboxInfo newSwitchbox = new DBHandler.SwitchboxInfo();
+                        if (row.Cells["colSwitchboxName"].Value != null)
+                            newSwitchbox.name = row.Cells["colSwitchboxName"].Value.ToString();
+                        else
+                            newSwitchbox.name = "[UNTITLED]";
+
+                        if (row.Cells["colSID"].Value == null)
+                            db.InsertSwitchbox(newSwitchbox);
+                        else
+                        {
+                            if (row.Cells["colSID"].Value != null && Int32.TryParse(row.Cells["colSID"].Value.ToString(), out test))
+                            {
+                                newSwitchbox.sid = Convert.ToInt32(row.Cells["colSID"].Value);
+                                db.UpdateSwitchbox(newSwitchbox);
+                            }
+                        }
+
+                    }
+                }
+            }
+
             RefreshLists();
         }
 
@@ -317,7 +433,7 @@ namespace VGCatalog
             RefreshLists();
         }
 
-        // Delete row
+        // Usere deletes rows manually (delete key)
         private void gridMain_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             // Prompt user
@@ -338,18 +454,6 @@ namespace VGCatalog
                 e.Cancel = true;
             }
         }
-
-        // File menu save
-        private void tsmSave_Click(object sender, EventArgs e)
-        {
-            btnSave_Click(sender, e);
-        }
-        // File menu refresh
-        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            RefreshLists();
-        }
-
         private void gridConsoles_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             // Prompt user
@@ -369,6 +473,54 @@ namespace VGCatalog
                 e.Cancel = true;
             }
         }
+        private void gridContainers_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            string name = "[UNTITLED]";
+            if (e.Row.Cells["colContainerName"].Value != null) name = e.Row.Cells["colContainerName"].Value.ToString();
+
+            DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete " + name + "?", "Are you sure?", MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                if (e.Row.Cells["colConID"].Value != null)
+                {
+                    db.DeleteContainer(Convert.ToInt32(e.Row.Cells["colConID"].Value));
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void gridSwitchboxes_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            string name = "[UNTITLED]";
+            if (e.Row.Cells["colSwitchboxName"].Value != null) name = e.Row.Cells["colSwitchboxName"].Value.ToString();
+
+            DialogResult confirm = MessageBox.Show("Are you sure you wish to permanently delete " + name + "?", "Are you sure?", MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                if (e.Row.Cells["colSID"].Value != null)
+                {
+                    db.DeleteSwitchbox(Convert.ToInt32(e.Row.Cells["colSID"].Value));
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        // File menu save
+        private void tsmSave_Click(object sender, EventArgs e)
+        {
+            btnSave_Click(sender, e);
+        }
+        // File menu refresh
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshLists();
+        }
 
         // Add row that has had cell changed
         private void gridMain_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -381,6 +533,16 @@ namespace VGCatalog
         {
             if (!ignoreChange && e.RowIndex != -1)
                 consolesChangedRows.Add(e.RowIndex);
+        }
+        private void gridContainers_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!ignoreChange && e.RowIndex != -1)
+                containersChangedRows.Add(e.RowIndex);
+        }
+        private void gridSwitchboxes_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!ignoreChange && e.RowIndex != -1)
+                switchboxesChangedRows.Add(e.RowIndex);
         }
 
         // Export current grid view

@@ -46,13 +46,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gridMain = new System.Windows.Forms.DataGridView();
-            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPublisher = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGenre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colConsole = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colBoxed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colContainer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colGID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tpGames = new System.Windows.Forms.TabPage();
             this.tpConsoles = new System.Windows.Forms.TabPage();
@@ -73,6 +66,13 @@
             this.colContainerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colConID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gridSwitchboxes = new System.Windows.Forms.DataGridView();
+            this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPublisher = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colGenre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colConsole = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colBoxed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colContainer = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colGID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSwitchboxName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNumSwitches = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -97,7 +97,7 @@
             this.helpToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(795, 24);
+            this.mnuMain.Size = new System.Drawing.Size(804, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "menuStrip1";
             // 
@@ -209,54 +209,10 @@
             this.gridMain.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.gridMain.Location = new System.Drawing.Point(6, 6);
             this.gridMain.Name = "gridMain";
-            this.gridMain.Size = new System.Drawing.Size(778, 444);
+            this.gridMain.Size = new System.Drawing.Size(787, 444);
             this.gridMain.TabIndex = 6;
             this.gridMain.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellValueChanged);
             this.gridMain.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridMain_UserDeletingRow);
-            // 
-            // colName
-            // 
-            this.colName.HeaderText = "Name";
-            this.colName.Name = "colName";
-            this.colName.Width = 150;
-            // 
-            // colPublisher
-            // 
-            this.colPublisher.HeaderText = "Publisher";
-            this.colPublisher.Name = "colPublisher";
-            this.colPublisher.Width = 150;
-            // 
-            // colGenre
-            // 
-            this.colGenre.HeaderText = "Genre";
-            this.colGenre.Name = "colGenre";
-            this.colGenre.Width = 150;
-            // 
-            // colConsole
-            // 
-            this.colConsole.HeaderText = "Console";
-            this.colConsole.Name = "colConsole";
-            this.colConsole.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colConsole.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colConsole.Width = 130;
-            // 
-            // colBoxed
-            // 
-            this.colBoxed.HeaderText = "In Box";
-            this.colBoxed.Name = "colBoxed";
-            this.colBoxed.Width = 45;
-            // 
-            // colContainer
-            // 
-            this.colContainer.HeaderText = "Container #";
-            this.colContainer.Name = "colContainer";
-            this.colContainer.Width = 80;
-            // 
-            // colGID
-            // 
-            this.colGID.HeaderText = "GID";
-            this.colGID.Name = "colGID";
-            this.colGID.Visible = false;
             // 
             // tabMain
             // 
@@ -270,7 +226,7 @@
             this.tabMain.Location = new System.Drawing.Point(0, 56);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(795, 613);
+            this.tabMain.Size = new System.Drawing.Size(804, 613);
             this.tabMain.TabIndex = 7;
             // 
             // tpGames
@@ -279,7 +235,7 @@
             this.tpGames.Location = new System.Drawing.Point(4, 22);
             this.tpGames.Name = "tpGames";
             this.tpGames.Padding = new System.Windows.Forms.Padding(3);
-            this.tpGames.Size = new System.Drawing.Size(787, 587);
+            this.tpGames.Size = new System.Drawing.Size(796, 587);
             this.tpGames.TabIndex = 0;
             this.tpGames.Text = "Games";
             this.tpGames.UseVisualStyleBackColor = true;
@@ -290,7 +246,7 @@
             this.tpConsoles.Location = new System.Drawing.Point(4, 22);
             this.tpConsoles.Name = "tpConsoles";
             this.tpConsoles.Padding = new System.Windows.Forms.Padding(3);
-            this.tpConsoles.Size = new System.Drawing.Size(787, 587);
+            this.tpConsoles.Size = new System.Drawing.Size(796, 587);
             this.tpConsoles.TabIndex = 1;
             this.tpConsoles.Text = "Consoles";
             this.tpConsoles.UseVisualStyleBackColor = true;
@@ -313,7 +269,7 @@
             this.gridConsoles.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.gridConsoles.Location = new System.Drawing.Point(6, 6);
             this.gridConsoles.Name = "gridConsoles";
-            this.gridConsoles.Size = new System.Drawing.Size(778, 444);
+            this.gridConsoles.Size = new System.Drawing.Size(787, 444);
             this.gridConsoles.TabIndex = 7;
             this.gridConsoles.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridConsoles_CellValueChanged);
             this.gridConsoles.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridConsoles_UserDeletingRow);
@@ -357,7 +313,7 @@
             this.tpContainers.Controls.Add(this.gridContainers);
             this.tpContainers.Location = new System.Drawing.Point(4, 22);
             this.tpContainers.Name = "tpContainers";
-            this.tpContainers.Size = new System.Drawing.Size(787, 587);
+            this.tpContainers.Size = new System.Drawing.Size(796, 587);
             this.tpContainers.TabIndex = 2;
             this.tpContainers.Text = "Containers";
             this.tpContainers.UseVisualStyleBackColor = true;
@@ -367,7 +323,7 @@
             this.tpSwitchboxes.Controls.Add(this.gridSwitchboxes);
             this.tpSwitchboxes.Location = new System.Drawing.Point(4, 22);
             this.tpSwitchboxes.Name = "tpSwitchboxes";
-            this.tpSwitchboxes.Size = new System.Drawing.Size(787, 587);
+            this.tpSwitchboxes.Size = new System.Drawing.Size(796, 587);
             this.tpSwitchboxes.TabIndex = 3;
             this.tpSwitchboxes.Text = "Switchboxes";
             this.tpSwitchboxes.UseVisualStyleBackColor = true;
@@ -419,8 +375,10 @@
             this.gridContainers.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.gridContainers.Location = new System.Drawing.Point(6, 6);
             this.gridContainers.Name = "gridContainers";
-            this.gridContainers.Size = new System.Drawing.Size(778, 444);
+            this.gridContainers.Size = new System.Drawing.Size(787, 444);
             this.gridContainers.TabIndex = 8;
+            this.gridContainers.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridContainers_CellValueChanged);
+            this.gridContainers.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridContainers_UserDeletingRow);
             // 
             // colContainerName
             // 
@@ -449,8 +407,55 @@
             this.gridSwitchboxes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.gridSwitchboxes.Location = new System.Drawing.Point(6, 6);
             this.gridSwitchboxes.Name = "gridSwitchboxes";
-            this.gridSwitchboxes.Size = new System.Drawing.Size(778, 444);
+            this.gridSwitchboxes.Size = new System.Drawing.Size(787, 444);
             this.gridSwitchboxes.TabIndex = 9;
+            this.gridSwitchboxes.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridSwitchboxes_CellValueChanged);
+            this.gridSwitchboxes.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.gridSwitchboxes_UserDeletingRow);
+            // 
+            // colName
+            // 
+            this.colName.HeaderText = "Name";
+            this.colName.Name = "colName";
+            this.colName.Width = 150;
+            // 
+            // colPublisher
+            // 
+            this.colPublisher.HeaderText = "Publisher";
+            this.colPublisher.Name = "colPublisher";
+            this.colPublisher.Width = 150;
+            // 
+            // colGenre
+            // 
+            this.colGenre.HeaderText = "Genre";
+            this.colGenre.Name = "colGenre";
+            this.colGenre.Width = 150;
+            // 
+            // colConsole
+            // 
+            this.colConsole.HeaderText = "Console";
+            this.colConsole.Name = "colConsole";
+            this.colConsole.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colConsole.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colConsole.Width = 130;
+            // 
+            // colBoxed
+            // 
+            this.colBoxed.HeaderText = "In Box";
+            this.colBoxed.Name = "colBoxed";
+            this.colBoxed.Width = 45;
+            // 
+            // colContainer
+            // 
+            this.colContainer.HeaderText = "Container";
+            this.colContainer.Name = "colContainer";
+            this.colContainer.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colContainer.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colGID
+            // 
+            this.colGID.HeaderText = "GID";
+            this.colGID.Name = "colGID";
+            this.colGID.Visible = false;
             // 
             // colSwitchboxName
             // 
@@ -473,7 +478,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(795, 557);
+            this.ClientSize = new System.Drawing.Size(804, 557);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.btnDelRow);
             this.Controls.Add(this.btnRefresh);
@@ -511,13 +516,6 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnDelRow;
         private System.Windows.Forms.DataGridView gridMain;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPublisher;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colGenre;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colConsole;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colBoxed;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colContainer;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colGID;
         private System.Windows.Forms.TabControl tabMain;
         private System.Windows.Forms.TabPage tpGames;
         private System.Windows.Forms.TabPage tpConsoles;
@@ -541,6 +539,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colContainerName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colConID;
         private System.Windows.Forms.DataGridView gridSwitchboxes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPublisher;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGenre;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colConsole;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colBoxed;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colContainer;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colGID;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSwitchboxName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNumSwitches;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSID;

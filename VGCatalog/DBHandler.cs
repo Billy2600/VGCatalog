@@ -29,6 +29,7 @@ namespace VGCatalog
             public string consoleName;
             public bool boxed;
             public int containerId;
+            public string containerName;
         }
 
         // Console info struct
@@ -84,7 +85,7 @@ namespace VGCatalog
 
             // Get all game info and store into list
             using (SqlConnection connection = new SqlConnection(connectString))
-            using (SqlCommand cmd = new SqlCommand("SELECT Games.gid, Games.name, publisher, genre, console_id, boxed, Games.container_id, Consoles.name as CName FROM Games, Consoles WHERE Consoles.cid = Games.console_id ORDER BY Games.name asc", connection))
+            using (SqlCommand cmd = new SqlCommand("SELECT gid, Games.name, publisher, genre, console_id, boxed, Games.container_id, Consoles.name as CName, Containers.name as ConName FROM Games LEFT JOIN Consoles ON Games.console_id = Consoles.cid LEFT JOIN Containers on Games.container_id = Containers.con_id ORDER BY Games.name asc", connection))
             {
                 connection.Open();
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -106,15 +107,16 @@ namespace VGCatalog
                             int genreIndex = reader.GetOrdinal("genre");
                             if (!reader.IsDBNull(genreIndex)) g.genre = reader.GetString(genreIndex);
 
-                            g.consoleId = reader.GetInt32(reader.GetOrdinal("console_id"));
-
                             // Must get console name to match the combo box
-                            g.consoleName = reader.GetString(reader.GetOrdinal("CName"));
+                            int cnameIndex = reader.GetOrdinal("CName");
+                            if(!reader.IsDBNull(cnameIndex)) g.consoleName = reader.GetString(cnameIndex);
 
                             g.boxed = reader.GetBoolean(reader.GetOrdinal("boxed"));
 
-                            int containerIndex = reader.GetOrdinal("container_id");
-                            if (!reader.IsDBNull(containerIndex)) g.containerId = reader.GetInt32(containerIndex);
+                            // Must get container name much like console
+                            int containerIndex = reader.GetOrdinal("ConName");
+                            if (!reader.IsDBNull(containerIndex)) g.containerName = reader.GetString(containerIndex);
+
                             gameList.Add(g);
                         }
                     }
@@ -390,6 +392,107 @@ namespace VGCatalog
             return containerList;
         }
 
+        // Get Container names
+        public List<string> GetContainerNames()
+        {
+            List<string> containerNames = new List<string>();
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT name FROM Containers ORDER BY name asc", connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Check if the reader has any rows at all before starting to read
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            containerNames.Add(reader.GetString(reader.GetOrdinal("name")));
+                        }
+                    }
+                }
+                // Disconnect
+                connection.Close();
+            }
+            return containerNames;
+        }
+
+        // Get container ID from name
+        public int GetContainerID(string name)
+        {
+            int containerID = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("SELECT cid FROM Containers WHERE name = @Name", connection))
+            {
+                cmd.Parameters.AddWithValue("@Name", name);
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Check if the reader has any rows at all before starting to read
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            containerID = reader.GetInt32(reader.GetOrdinal("cid"));
+                        }
+                    }
+                }
+                // Disconnect
+                connection.Close();
+            }
+            return containerID;
+        }
+
+        public void DeleteContainer(int conID)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("DELETE FROM Containers WHERE con_id = @ConId", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@ConId", conID);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
+        public void InsertContainer(ContainerInfo newContainer)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO Containers(name) VALUES(@Name)", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Name", newContainer.name);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
+        public void UpdateContainer(ContainerInfo updateContainer)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("UPDATE Containers SET name = @Name WHERE con_id = @ConID", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@ConID", updateContainer.con_id);
+                cmd.Parameters.AddWithValue("@Name", updateContainer.name);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
         /* ==========================
          * SWITCHBOXES
          * ==========================*/
@@ -420,6 +523,57 @@ namespace VGCatalog
 
             // return lsit
             return switchboxList;
+        }
+
+        public void DeleteSwitchbox(int sid)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("DELETE FROM Switchboxes WHERE sid = @Sid", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Sid", sid);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
+        public void InsertSwitchbox(SwitchboxInfo newSwitchbox)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO Switchboxes (name,num_switches) VALUES(@Name, @NumSwitches)", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Name", newSwitchbox.name);
+                cmd.Parameters.AddWithValue("@NumSwitches", newSwitchbox.numSwitches);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
+        }
+
+        public void UpdateSwitchbox(SwitchboxInfo updateSwitchbox)
+        {
+            using (SqlConnection connection = new SqlConnection(connectString))
+            using (SqlCommand cmd = new SqlCommand("UPDATE Switchboxs SET name = @Name, num_switches = @NuMSwitches WHERE sid = @Sid", connection))
+            {
+                // Add parameters
+                cmd.Parameters.AddWithValue("@Sid", updateSwitchbox.sid);
+                cmd.Parameters.AddWithValue("@Name", updateSwitchbox.name);
+                cmd.Parameters.AddWithValue("@NumSwitches", updateSwitchbox.numSwitches);
+                // Open connection and insert
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                // Disconnect
+                connection.Close();
+            }
         }
     }
 }
