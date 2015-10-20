@@ -659,6 +659,26 @@ namespace VGCatalog
 
         }
 
-        
+        // Search
+        private void Search(string query)
+        {
+            MessageBox.Show(query);
+        }
+
+        // Call search when enter button pressed
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            Search(txtSearch.Text);
+        }
+
+        // Call search when user presses enter key
+        private void txtSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                Search(txtSearch.Text);
+                e.Handled = true;
+            }
+        }
     }
 }
