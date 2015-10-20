@@ -439,6 +439,7 @@ namespace VGCatalog
         // Refresh game list
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            txtSearch.Text = "";
             RefreshLists();
         }
 
@@ -528,6 +529,7 @@ namespace VGCatalog
         // File menu refresh
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            txtSearch.Text = "";
             RefreshLists();
         }
 
@@ -662,7 +664,20 @@ namespace VGCatalog
         // Search
         private void Search(string query)
         {
-            MessageBox.Show(query);
+            // Early out if no text entered
+            if (query == "")
+                return;
+
+            ignoreChange = true;
+            // Games tab is selected
+            if(tabMain.SelectedTab.Name == "tpGames")
+            {
+                gridMain.Rows.Clear();
+                gridMain.Refresh();
+                BuildGameList(db.GetAllGames(query));
+            }
+
+            ignoreChange = false;
         }
 
         // Call search when enter button pressed

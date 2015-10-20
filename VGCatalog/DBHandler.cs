@@ -80,16 +80,25 @@ namespace VGCatalog
          * ==========================*/
 
         // Get the data for all games
-        public List<GameInfo> GetAllGames()
+        public List<GameInfo> GetAllGames(string searchQuery = "")
         {
             // Initialize list
             List<GameInfo> gameList = new List<GameInfo>();
 
+            // sql query
+            string query = "SELECT gid, Games.name, publisher, genre, console_id, boxed, Games.container_id, Consoles.name as CName, Containers.name as ConName FROM Games LEFT JOIN Consoles ON Games.console_id = Consoles.cid LEFT JOIN Containers on Games.container_id = Containers.con_id ";
+            // Add onto it if search was entered
+            if (searchQuery != "")
+                query += "WHERE Games.name LIKE @Search OR publisher LIKE @Search OR genre LIKE @Search ";
+            query += "ORDER BY Games.name asc";
+
             // Get all game info and store into list
             using (SqlConnection connection = new SqlConnection(connectString))
-            using (SqlCommand cmd = new SqlCommand("SELECT gid, Games.name, publisher, genre, console_id, boxed, Games.container_id, Consoles.name as CName, Containers.name as ConName FROM Games LEFT JOIN Consoles ON Games.console_id = Consoles.cid LEFT JOIN Containers on Games.container_id = Containers.con_id ORDER BY Games.name asc", connection))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
             {
+                cmd.Parameters.AddWithValue("@Search", "%" + searchQuery + "%");
                 connection.Open();
+
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     // Check if the reader has any rows at all before starting to read
@@ -111,7 +120,7 @@ namespace VGCatalog
 
                             // Must get console name to match the combo box
                             int cnameIndex = reader.GetOrdinal("CName");
-                            if(!reader.IsDBNull(cnameIndex)) g.consoleName = reader.GetString(cnameIndex);
+                            if (!reader.IsDBNull(cnameIndex)) g.consoleName = reader.GetString(cnameIndex);
 
                             g.boxed = reader.GetBoolean(reader.GetOrdinal("boxed"));
 
